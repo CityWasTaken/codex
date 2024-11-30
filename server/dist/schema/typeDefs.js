@@ -1,5 +1,4 @@
 const gql = String.raw;
-
 const typeDefs = gql `
 
 type Post {
@@ -43,5 +42,4 @@ type Mutation {
 }
 
 `;
-
 export default typeDefs;
