@@ -1,4 +1,6 @@
 
+import { Post, Comment } from '../../models/Post'
+
 const user_resolvers = {
 
     // Get all posts
