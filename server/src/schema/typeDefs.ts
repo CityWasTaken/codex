@@ -30,9 +30,15 @@ type Comment {
 
 # Query type defines the read operations
 type Query {
+
     user: [User]
     posts: [Post]
     post(id: ID!): Post # Fetch a single post by it's ID
+
+    # Auth Queries
+    getUser: Response
+    # User Queries
+    getAllPosts: [Post]
 
 },
 
@@ -41,6 +47,12 @@ type Mutation {
     createUser(username: String!, email: String!, password: String!): User
     createPost(content: String!): Post
     createComment(postId: ID!, content: String!): comment
+    
+    # Auth Resolvers
+    registerUser(username: String, email: String, password: String): Response
+    loginUser(email: String, password: String): Response
+    logoutUser: Response
+    # User Resolvers
 }
 
 `;

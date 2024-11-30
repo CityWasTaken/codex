@@ -5,5 +5,5 @@ export interface User {
     username?: string
     email?: string
     password?: string
-    validatePassword(formPassword: String): boolean
+    validatePassword(formPassword: string): boolean
 }
