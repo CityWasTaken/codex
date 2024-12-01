@@ -6,6 +6,11 @@ import Context from "../../interfaces/Context"
 import { errorHandler } from "../helpers/index.js"
 import { GraphQLError } from "graphql"
 
+type PostArgs = {
+    postText: string,
+    comments?: 
+}
+
 const user_resolvers = {
 
     Query: {
@@ -18,7 +23,7 @@ const user_resolvers = {
 
 
         // Create a post
-        async createPost() {
+        async createPost(_: any, args: ) {
 
         }
 
