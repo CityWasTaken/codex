@@ -1,68 +1,43 @@
-import { Types } from "mongoose"
+// import { Types } from "mongoose"
 
-<<<<<<< HEAD
-// // import { Post, Comment } from '../../models/Post'
-=======
-import Post from "../../models/Post"
-import Context from "../../interfaces/Context"
+// import Post from "../../models/Post"
+// import Context from "../../interfaces/Context"
 
-import { errorHandler } from "../helpers/index.js"
-import { GraphQLError } from "graphql"
+// import { errorHandler } from "../helpers/index.js"
+// import { GraphQLError } from "graphql"
 
-type PostArgs = {
-    postText: string,
-    comments?: 
-}
->>>>>>> 806be707472eaf77ba47a72f24368c52e334fb06
-
-// const user_resolvers = {
-
-<<<<<<< HEAD
-//     // Get all posts
-    
-    
-//     // Create a post
-    
-    
-//     // Update a post
-    
-//     // 
-//     // Delete a post
-    
-    
-//     // Like a post
-    
-    
-//     // Comment on a post
-    
+// type PostArgs = {
+//     postText: string,
+//     comments?: 
 // }
-=======
-    Query: {
 
-        // Get all posts
+// // const user_resolvers = {
 
-    },
+//     Query: {
 
-    Mutation: {
+//         // Get all posts
 
+//     },
 
-        // Create a post
-        async createPost(_: any, args: ) {
-
-        }
-
-        // Update a post
+//     Mutation: {
 
 
-        // Delete a post
+//         // Create a post
+//         async createPost(_: any, args: ) {
+
+//         }
+
+//         // Update a post
 
 
-        // Like a post
+//         // Delete a post
 
 
-        // Comment on a post
-    }
-}
->>>>>>> 806be707472eaf77ba47a72f24368c52e334fb06
+//         // Like a post
 
-// export default user_resolvers
+
+//         // Comment on a post
+//     }
+// }
+
+// // export default user_resolvers
