@@ -1,15 +1,25 @@
-interface Post {
-    id: number;
-    title: string;
-    content: number;
-    likes: number;
-    comments: Comment[];
-}
+import mongoose from "mongoose";
 
-interface Comment {
-    id: number;
-    content: string;
-    author: string;
-}
+const {Schema, model} = mongoose;
 
-export { Post, Comment};
+const postSchema = new Schema({
+    postText: {
+        type: String,
+        minLength: [3, 'Your post must be at least 3 characters in length']
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        required: [true, 'You must attatch the user _id to the post'],
+        ref: 'User'
+    },
+    comments: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Comment'
+    }]
+}, {
+    collection: 'comments'
+});
+
+const Post = model('Post', postSchema);
+
+export default Post;
