@@ -2,6 +2,7 @@
   "name": "codex",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "client:install": "cd ./client && npm i",
     "client:dev": "cd ./client && npm run dev",

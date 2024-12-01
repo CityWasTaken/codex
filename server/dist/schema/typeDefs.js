@@ -32,8 +32,26 @@ type Response {
 
 
 type Query {
+<<<<<<< HEAD
     getAllPosts: [Post]
     getPostById(id: ID): Post # To get specific Post by it's ID
+=======
+    # Auth Queries
+    getUser: Response
+    # User Queries
+    getAllUserPosts(user_id: ID): [Post]
+    
+},
+
+# Mutation type defines the write operations
+type Mutation {
+    # Auth Resolvers
+    registerUser(username: String, email: String, password: String): Response
+    loginUser(email: String, password: String): Response
+    logoutUser: Response
+    # User Resolvers
+    createPost(postText: String, user: ID): Response
+>>>>>>> 2151c5b205c7a61a36ad7bce752fac634b7e05b5
 }
 
 type Mutation {

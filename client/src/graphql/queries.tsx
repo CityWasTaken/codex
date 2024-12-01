@@ -12,13 +12,13 @@ export const GET_USER = gql`
   `;
 
 
-export const GET_ALL_POSTS = gql`
-  query GetAllPosts {
-    getAllPosts {
+export const GET_ALL_USER_POSTS = gql`
+  query GetAllUserPosts {
+    getAllUserPosts {
       _id
       title
       body
-      pet {
+      user {
         name
       }
     }
