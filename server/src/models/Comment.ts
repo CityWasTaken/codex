@@ -11,11 +11,16 @@ const commentSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: [true, 'You must attatch the user _id to the comment'],
         ref: 'User'
+    },
+    post: {
+        type: Schema.Types.ObjectId,
+        required: [true, 'You must attatch the post _id to the comment'],
+        ref: 'Post'
     }
 }, {
     collection: 'comments'
 });
 
-const Comment = model('Post', commentSchema);
+const Comment = model('Comment', commentSchema);
 
 export default Comment;
