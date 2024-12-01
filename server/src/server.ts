@@ -21,8 +21,7 @@ const server = new ApolloServer({
 });
 
 connection.once('open', async () => {
-    // Note you must call `start()` on the `ApolloServer`
-    // instance before passing the instance to `expressMiddleware`
+    // Note you must call `start()` on the `ApolloServer` instance before passing the instance to `expressMiddleware`
     await server.start();
 
     // Middleware

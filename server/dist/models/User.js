@@ -24,12 +24,21 @@ const userSchema = new Schema({
         minLength: [6, 'Your password must contain at least 6 characters']
     },
     // The notes property is going to be an array of note ids
+<<<<<<< HEAD
     pets: [{
             type: Schema.Types.ObjectId,
             ref: 'Pet'
         }]
 }, {
     collection: 'pet_app_user',
+=======
+    posts: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Post'
+        }]
+}, {
+    collection: 'user',
+>>>>>>> 806be707472eaf77ba47a72f24368c52e334fb06
     toJSON: {
         transform(_, user) {
             delete user.password;
@@ -51,9 +60,12 @@ userSchema.methods.validatePassword = async function (formPassword) {
     return await compare(formPassword, this.password);
 };
 const User = model('User', userSchema);
+<<<<<<< HEAD
 // const city = await User.create({
 //     email: 'city@test.com',
 //     password: 'pass123'
 // });
 // console.log(city);
+=======
+>>>>>>> 806be707472eaf77ba47a72f24368c52e334fb06
 export default User;

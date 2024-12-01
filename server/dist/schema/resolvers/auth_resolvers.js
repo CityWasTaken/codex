@@ -32,7 +32,11 @@ const auth_resolvers = {
             try {
                 const user = await User.create(args);
                 const token = createToken(user._id);
+<<<<<<< HEAD
                 context.res.cookie('pet_token', token, {
+=======
+                context.res.cookie('codex_token', token, {
+>>>>>>> 806be707472eaf77ba47a72f24368c52e334fb06
                     // Purpose: This setting ensures that the cookie is only accessible through HTTP(S) requests and not via client-side JavaScript.
                     // Security Benefit: It helps mitigate the risk of cross-site scripting (XSS) attacks by preventing malicious scripts from accessing the cookie's value.
                     httpOnly: true,
@@ -65,7 +69,11 @@ const auth_resolvers = {
                 throw new GraphQLError('Password is invalid');
             }
             const token = createToken(user._id);
+<<<<<<< HEAD
             context.res.cookie('pet_token', token, {
+=======
+            context.res.cookie('codex_token', token, {
+>>>>>>> 806be707472eaf77ba47a72f24368c52e334fb06
                 httpOnly: true,
                 secure: process.env.PORT ? true : false,
                 sameSite: true
@@ -76,7 +84,11 @@ const auth_resolvers = {
         },
         // Log out user
         logoutUser(_, __, context) {
+<<<<<<< HEAD
             context.res.clearCookie('pet_token');
+=======
+            context.res.clearCookie('codex_token');
+>>>>>>> 806be707472eaf77ba47a72f24368c52e334fb06
             return {
                 user: null
             };

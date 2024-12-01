@@ -1,5 +1,5 @@
 {
-  "name": "mongo_db_overview",
+  "name": "codex",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
