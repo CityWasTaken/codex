@@ -1,25 +1,25 @@
 
-import { Post, Comment } from '../../models/Post'
+// // import { Post, Comment } from '../../models/Post'
 
-const user_resolvers = {
+// const user_resolvers = {
 
-    // Get all posts
+//     // Get all posts
     
     
-    // Create a post
+//     // Create a post
     
     
-    // Update a post
+//     // Update a post
+    
+//     // 
+//     // Delete a post
     
     
-    // Delete a post
+//     // Like a post
     
     
-    // Like a post
+//     // Comment on a post
     
-    
-    // Comment on a post
-    
-}
+// }
 
-export default user_resolvers
+// export default user_resolvers
