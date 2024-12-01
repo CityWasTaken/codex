@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-export {};
-=======
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 const postSchema = new Schema({
@@ -22,4 +19,3 @@ const postSchema = new Schema({
 });
 const Post = model('Post', postSchema);
 export default Post;
->>>>>>> 806be707472eaf77ba47a72f24368c52e334fb06

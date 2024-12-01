@@ -14,12 +14,7 @@ const server = new ApolloServer({
     resolvers,
 });
 connection.once('open', async () => {
-<<<<<<< HEAD
-    // Note you must call `start()` on the `ApolloServer`
-    // instance before passing the instance to `expressMiddleware`
-=======
     // Note you must call `start()` on the `ApolloServer` instance before passing the instance to `expressMiddleware`
->>>>>>> 806be707472eaf77ba47a72f24368c52e334fb06
     await server.start();
     // Middleware
     app.use('/graphql', express.json(), 
