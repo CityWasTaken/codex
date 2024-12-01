@@ -39,6 +39,7 @@ type Query {
     getUser: Response
     # User Queries
     getAllUserPosts(user_id: ID): [Post]
+    getCommentsForPost(post_id: ID): [Comment]
     
 },
 
@@ -50,6 +51,7 @@ type Mutation {
     logoutUser: Response
     # User Resolvers
     createPost(postText: String, user: ID): Response
+    createComment(commentText: String, post: ID, user: ID): Response
 }
 
 `;
