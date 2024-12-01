@@ -12,6 +12,8 @@ const commentSchema = new Schema({
         required: [true, 'You must attatch the user _id to the comment'],
         ref: 'User'
     }
+}, {
+    collection: 'comments'
 });
 
 const Comment = model('Post', commentSchema);

@@ -38,8 +38,8 @@ type Query {
     # Auth Queries
     getUser: Response
     # User Queries
-    # getAllPosts: [Post]
-
+    getAllUserPosts(user_id: ID): [Post]
+    
 },
 
 # Mutation type defines the write operations
@@ -49,6 +49,7 @@ type Mutation {
     loginUser(email: String, password: String): Response
     logoutUser: Response
     # User Resolvers
+    createPost(postText: String, user: ID): Response
 }
 
 `;

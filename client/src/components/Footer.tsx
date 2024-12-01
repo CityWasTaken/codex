@@ -6,7 +6,7 @@ function Footer() {
     return (
             <footer className="bg-light">
                 <Container className="d-flex justify-content-between py-5">
-                <p>Copyright &copy; {date.getFullYear()} </p>
+                <p>Copyright &copy; {date.getFullYear()} Codex</p>
                 <p>Dev & Design by City Smith</p>
                 </Container>
             </footer>
