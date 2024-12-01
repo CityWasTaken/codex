@@ -1,5 +1,4 @@
-const gql =String.raw;
-
+const gql = String.raw;
 // The content field is needed to store the main body or text of the post. This is essential for a social media app as it represents the primary information that users create and interact with in response to posts.
 const typeDefs = gql `
 type User {
@@ -45,5 +44,4 @@ type Mutation {
     commentOnPost(postId: ID, body: String): PostResponse
 }
 `;
-
 export default typeDefs;
