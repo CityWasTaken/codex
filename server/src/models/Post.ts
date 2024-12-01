@@ -17,7 +17,7 @@ const postSchema = new Schema({
         ref: 'Comment'
     }]
 }, {
-    collection: 'comments'
+    collection: 'posts'
 });
 
 const Post = model('Post', postSchema);
