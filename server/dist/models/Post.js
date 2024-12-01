@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
-
-const {Schema, model} = mongoose;
-
+const { Schema, model } = mongoose;
 const postSchema = new Schema({
     postText: {
         type: String,
@@ -13,13 +11,11 @@ const postSchema = new Schema({
         ref: 'User'
     },
     comments: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Comment'
-    }]
+            type: Schema.Types.ObjectId,
+            ref: 'Comment'
+        }]
 }, {
     collection: 'comments'
 });
-
 const Post = model('Post', postSchema);
-
 export default Post;

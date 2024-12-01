@@ -20,6 +20,7 @@ const resolvers = {
     Query: {
         ...auth_resolvers.Query,
         // ...user_resolvers.Query
+        
     },
 
     Mutation: {

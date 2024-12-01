@@ -33,7 +33,7 @@ const userSchema = new Schema({
     ref: 'Post'
   }]
 }, {
-  collection: 'codex_user',
+  collection: 'user',
   toJSON: {
     transform(_, user) {
       delete user.password
