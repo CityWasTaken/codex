@@ -14,6 +14,14 @@ type PostArgs = {
     user: Types.ObjectId;
 }
 
+type UpdatePostArgs = {
+    postId: Types.ObjectId;
+    postText?: string;
+}
+
+type DeletePostArgs = {
+    postId: Types.ObjectId;
+}
 type CommentArgs = {
     commentText: string;
     post: Types.ObjectId;
@@ -32,6 +40,7 @@ const user_resolvers = {
                 errorHandler(error);
                 throw new GraphQLError('Failed to get user posts');
             }
+
         },
 
         async getCommentsForPost(_: any, args: {post_id: Types.ObjectId}) {
@@ -73,12 +82,38 @@ const user_resolvers = {
         },
 
         // Update a post
+        async updatePost(_: any, args: UpdatePostArgs, context: Context) {
+            if (!context.req.user) {
+                return {
+                    errors: ['You are not authorized to perform this action']
+                }
+            }
+            try {
+                const updatedPost = await Post.findByIdAndUpdate(args.postId, {
+                    postText: args.postText
+                }, { new: true });
+
+                if (!updatedPost) {
+                    throw new GraphQLError('Post not found');
+                }
+
+                return {
+                    message: 'Post updated Successfully!',
+                    post: updatedPost
+                }
+            } catch (error) {
+                const errorMessage = errorHandler(error);
+                throw new GraphQLError(errorMessage);
+            }
+        },
 
 
         // Delete a post
+        async deletePost(_: any, args: DeletePostArgs, context: Context) {
+            
+        }
 
-
-//         // Like a post
+        // Like a post
 
 
         // Comment on a post
