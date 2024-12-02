@@ -38,7 +38,7 @@ function Header() {
             <Container fluid={true}>
 
                 {/* //Nav links */}
-                <Navbar.Brand as={NavLink} to="/">Codex</Navbar.Brand>
+                <Navbar.Brand as={NavLink} to="/">CodeX</Navbar.Brand>
 
 
                 <Nav className="ms-auto">
