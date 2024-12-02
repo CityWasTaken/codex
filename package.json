@@ -2,6 +2,7 @@
   "name": "codex",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "client:install": "cd ./client && npm i",
     "client:dev": "cd ./client && npm run dev",
@@ -15,7 +16,7 @@
     "render:install": "cd ./server && npm i",
     "install": "cd ./server && npm i && cd ../client && npm i",
     "test:dev": "concurrently \"npm run dev\" \"wait-on tcp:5173 && cd ./client && npm run cypress:open\"",
-    "cypress:test": "cd ./client && npm run cypress:run", 
+    "cypress:test": "cd ./client && npm run cypress:run",
     "test": "start-server-and-test start http://localhost:10000 cypress:test",
     "prep": "npm run client:build && npm run server:build"
   },
@@ -27,5 +28,10 @@
     "concurrently": "^9.1.0",
     "start-server-and-test": "^2.0.8",
     "wait-on": "^8.0.1"
+  },
+  "dependencies": {
+    "apollo-server": "^3.13.0",
+    "dotenv": "^16.4.5",
+    "graphql": "^16.9.0"
   }
 }

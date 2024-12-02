@@ -11,21 +11,16 @@ import { client } from "../main";
 
 function Header() {
     const { state, setState } = useStore()!;
-    /*
-    const store = useStore();
-    if (!store) {
-        throw new Error("Store is not available")
-    }
-    const {state} = store;
-    */
 
     const [logoutUser] = useMutation(LOGOUT_USER, {
         onCompleted() {
             client.clearStore();
         }
     });
+
     const navigate = useNavigate();
 
+    // Logout user
     const handleLogout = async (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         event.preventDefault();
 
@@ -43,14 +38,22 @@ function Header() {
     return (
         <Navbar bg="light" data-bs-theme="light">
             <Container fluid={true}>
-                <Navbar.Brand as={NavLink} to="/">Petstagram</Navbar.Brand>
+
+                //Nav links
+                <Navbar.Brand as={NavLink} to="/">Codex</Navbar.Brand>
+
+
                 <Nav className="ms-auto">
                     <Nav.Link as={NavLink} to="/">Home</Nav.Link>
 
                     {state.user ? (
                         <>
-                            <Nav.Link as={NavLink} to="/dashboard">Dashboard</Nav.Link>
-                            <Nav.Link as={NavLink} to="/pet/add">Add a Pet</Nav.Link>
+                            //links for logged in users
+                            <Nav.Link as = {NavLink} to="/profile">My Profile</Nav.Link>
+                            <Nav.Link as = {NavLink} to="/landing">My Feed</Nav.Link>
+                            <Nav.Link as = {NavLink} to="/followers">Followers</Nav.Link>
+                            <Nav.Link as = {NavLink} to="/following">Following</Nav.Link>
+
                             <NavDropdown title="Profile Menu">
                                 <NavDropdown.ItemText className="border-bottom mb-2">{state.user.username}</NavDropdown.ItemText>
                                 <NavDropdown.Item onClick={handleLogout} href="/logout">Logout</NavDropdown.Item>
@@ -58,12 +61,10 @@ function Header() {
                         </>
                     ) : (
                         <>
-                            <Nav.Link as={NavLink} to="/register">Register</Nav.Link>
+                            <Nav.Link as={NavLink} to="/signup">Sign Up</Nav.Link>
                             <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
                         </>
                     )}
-
-
                 </Nav>
             </Container>
         </Navbar>
