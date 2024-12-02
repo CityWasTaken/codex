@@ -15,7 +15,11 @@ const postSchema = new Schema({
     comments: [{
         type: Schema.Types.ObjectId,
         ref: 'Comment'
-    }]
+    }],
+    likes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Post'
+      }],
 }, {
     collection: 'posts'
 });

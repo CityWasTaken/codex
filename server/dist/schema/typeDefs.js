@@ -57,7 +57,6 @@ type Mutation {
     createComment(commentText: String, post: ID, user: ID): Response
     followUser(userId: ID!): Response
     unfollowUser(userId: ID!): Response
-
 }
 `;
 export default typeDefs;
