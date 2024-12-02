@@ -26,12 +26,6 @@ function Profile() {
     
 
   return (
-    //display user info
-    //make following and following button that links to respective pages
-    //make a grid of posts that the user has made
-    //use card from bootstrap to make it look decent
-
-
 
     <Container fluid={true} className="mt-a">
         <Row>

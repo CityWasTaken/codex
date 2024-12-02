@@ -7,6 +7,8 @@ type User {
     username: String!
     email: String!
     posts: [Post]
+    following: [User]
+    followers: [User]
 }
 
 type Post {
@@ -32,6 +34,7 @@ type Response {
 }
 
 
+
 type Query {
     # Auth Queries
     getUser: Response
@@ -53,6 +56,8 @@ type Mutation {
     deletePost(postId: ID): Response
     likePost(postId: ID): Response
     createComment(commentText: String, post: ID, user: ID): Response
+    followUser(userId: ID!): Response
+    unfollowUser(userId: ID!): Response
 }
 `;
 
