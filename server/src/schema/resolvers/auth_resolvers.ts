@@ -94,6 +94,7 @@ const auth_resolvers = {
       })
 
       return {
+        message: 'Welcome! We\'ve been expecting you!',
         user: user
       }
     },
@@ -103,6 +104,7 @@ const auth_resolvers = {
       context.res.clearCookie('codex_token');
 
       return {
+        message: 'You are no longer signed in!',
         user: null
       }
     }

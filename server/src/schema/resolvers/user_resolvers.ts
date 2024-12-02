@@ -113,7 +113,7 @@ const user_resolvers = {
         // Delete a post
         // async deletePost(_: any, args: DeletePostArgs, context: Context) {
             
-        // }
+        // },
 
         // Like a post
 
@@ -150,7 +150,53 @@ const user_resolvers = {
             }
         },
 
-        
+        followUser: async (_: any, { userId }: { userId: string }, context: Context) => {
+            const currentUser = context.req.user;
+            if (!currentUser) {
+                throw new Error('You must be logged in to follow users');
+            }
+
+            const userToFollow = await User.findById(userId);
+            if (!userToFollow) {
+                throw new Error('User not found');
+            }
+
+            if (!currentUser.following.includes(userId)) {
+                currentUser.following.push(userId);
+                await currentUser.save();
+
+                userToFollow.followers.push(currentUser._id);
+                await userToFollow.save();
+            }
+
+            return {
+                message: 'You are now following this user!',
+                userToFollow
+            };
+        },
+
+        unfollowUser: async (_: any, { userId }: { userId: string }, context: Context) => {
+            const currentUser = context.req.user;
+            if (!currentUser) {
+                throw new Error('You must be logged in to unfollow users');
+            }
+
+            const userToUnfollow = await User.findById(userId);
+            if (!userToUnfollow) {
+                throw new Error('User not found');
+            }
+
+            currentUser.following = currentUser.following.filter((id: Types.ObjectId) => id.toString() !== userId);
+            await currentUser.save();
+
+            userToUnfollow.followers = userToUnfollow.followers.filter((id: Types.ObjectId) => id.toString() !== currentUser._id.toString());
+            await userToUnfollow.save();
+
+            return {
+                message: 'You are no longer following this user!',
+                userToUnfollow
+            };
+        }
     }
 }
 

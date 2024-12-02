@@ -27,6 +27,14 @@ const userSchema = new Schema({
     required: true,
     minLength: [6, 'Your password must contain at least 6 characters']
   },
+  following: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }],
+  followers: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }],
   // The notes property is going to be an array of note ids
   posts: [{
     type: Schema.Types.ObjectId,
