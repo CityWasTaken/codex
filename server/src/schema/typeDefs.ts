@@ -53,6 +53,8 @@ type Mutation {
     # User Resolvers
     createPost(postText: String, user: ID): Response
     updatePost(post: ID, postText: String): Response
+    deletePost(postId: ID): Response
+    likePost(postId: ID): Response
     createComment(commentText: String, post: ID, user: ID): Response
     followUser(userId: ID!): Response
     unfollowUser(userId: ID!): Response
