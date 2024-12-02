@@ -1,11 +1,11 @@
-// import { Types } from "mongoose"
+import { Types } from "mongoose"
 
 import Post from "../../models/Post.js"
 import User from "../../models/User.js"
 import Context from "../../interfaces/Context"
 
-// import { errorHandler } from "../helpers/index.js"
-// import { GraphQLError } from "graphql"
+import { errorHandler } from "../helpers/index.js"
+import { GraphQLError } from "graphql"
 
 type PostArgs = {
     postText: string;
@@ -13,7 +13,7 @@ type PostArgs = {
     user: Types.ObjectId;
 }
 
-// // const user_resolvers = {
+const user_resolvers = {
 
     Query: {
         // Get all user posts
@@ -28,7 +28,7 @@ type PostArgs = {
         }
     },
 
-//     Mutation: {
+    Mutation: {
 
 
         // Create a post
@@ -66,8 +66,8 @@ type PostArgs = {
 //         // Like a post
 
 
-//         // Comment on a post
-//     }
-// }
+        // Comment on a post
+    }
+}
 
-// // export default user_resolvers
+export default user_resolvers;

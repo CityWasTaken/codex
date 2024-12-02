@@ -42,7 +42,7 @@ const user_resolvers = {
         }
         // Update a post
         // Delete a post
-        // Like a post
+        //         // Like a post
         // Comment on a post
     }
 };
