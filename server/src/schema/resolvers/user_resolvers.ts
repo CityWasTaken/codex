@@ -1,6 +1,7 @@
 import { Types } from "mongoose"
 
 import Post from "../../models/Post.js"
+import Comment from "../../models/Comment.js"
 import User from "../../models/User.js"
 import Context from "../../interfaces/Context"
 
@@ -21,6 +22,11 @@ type UpdatePostArgs = {
 type DeletePostArgs = {
     postId: Types.ObjectId;
 }
+type CommentArgs = {
+    commentText: string;
+    post: Types.ObjectId;
+    user: Types.ObjectId;
+}
 
 const user_resolvers = {
 
@@ -34,6 +40,15 @@ const user_resolvers = {
                 errorHandler(error);
                 throw new GraphQLError('Failed to get user posts');
             }
+
+        },
+
+        async getCommentsForPost(_: any, args: {post_id: Types.ObjectId}) {
+            const comments = Comment.find({
+                post: args.post_id
+            });
+
+            return comments;
         }
     },
 
@@ -117,12 +132,43 @@ const user_resolvers = {
             }
         },
 
-
         // Like a post
 
 
         // Comment on a post
+        async createComment(_: any, args: CommentArgs, context: Context) {
+            if (!context.req.user) {
+                return {
+                    errors: ['You are not authorized to perform this action']
+                }
+            }
+            try {
+                const comment = await Comment.create(args);
+
+                await Post.findByIdAndUpdate(args.post, {
+                    $push: {
+                        comments: comment._id
+                    }
+                });
+
+                await User.findByIdAndUpdate(args.user, {
+                    $push: {
+                        comments: comment._id
+                    }
+                });
+
+                return {
+                    message: 'Comment was ACTUALLY added!'
+                }
+            } catch (error) {
+                const errorMessage = errorHandler(error);
+
+                throw new GraphQLError(errorMessage);
+            }
+        },
+
+        
     }
 }
 
-export default user_resolvers
+export default user_resolvers;

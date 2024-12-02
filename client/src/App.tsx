@@ -5,7 +5,7 @@ import { useStore } from "./store";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import ProtectRoute from "./components/ProtectRout";
+import ProtectRoute from "./components/ProtectRoute";
 
 import AuthForm from "./pages/AuthForm";
 import Landing from "./pages/Landing";
