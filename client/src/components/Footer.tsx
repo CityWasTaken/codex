@@ -5,10 +5,10 @@ function Footer() {
 
     return (
             <footer className="bg-light">
-                <Container className="d-flex justify-content-between py-5">
+                <section className="d-flex justify-content-between py-5">
                 <p>Copyright &copy; {date.getFullYear()} </p>
-                <p>Dev & Design by City Smith</p>
-                </Container>
+                <p>Dev & Design by City Smith, Adonis Zepeda, Kandyce Mbua, and Rita Aponte</p>
+                </section>
             </footer>
     )
 }
