@@ -2,6 +2,8 @@ import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 
+import React from "react";
+
 import { useStore } from "../store";
 import { LOGOUT_USER } from "../graphql/mutations";
 import { client } from "../main";
