@@ -117,7 +117,6 @@ const user_resolvers = {
                 throw new GraphQLError(errorMessage);
             }
         },
-
         // Comment on a post
         async createComment(_, args, context) {
             if (!context.req.user) {

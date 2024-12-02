@@ -46,7 +46,7 @@ function UserForm() {
             });
 
 
-            navigate('/dashboard');
+            navigate('/profile');
         } catch (error: any) {
             setFormData({
                 ...formData,
