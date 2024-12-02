@@ -22,6 +22,11 @@ type UpdatePostArgs = {
 type DeletePostArgs = {
     postId: Types.ObjectId;
 }
+
+type LikePostArgs = {
+    postId: Types.ObjectId;
+}
+
 type CommentArgs = {
     commentText: string;
     post: Types.ObjectId;
@@ -133,7 +138,30 @@ const user_resolvers = {
         },
 
         // Like a post
+        async likePost(_: any, args: LikePostArgs, context: Context) {
+            if (!context.req.user) {
+                return {
+                    errors: ['You are not authorized to perform this action']
+                }
+            }
+            try {
+                const likedPost = await Post.findByIdAndUpdate(args.postId, {
+                    $inc: {likes: 1}
+                }, {new: true});
 
+                if (!likedPost) {
+                    throw new GraphQLError('Post not found');
+                }
+
+                return {
+                    message: 'Post liked successfully!',
+                    post: likedPost
+                }
+            } catch (error) {
+                const errorMessage = errorHandler(error);
+                throw new GraphQLError(errorMessage);
+            }
+        },
 
         // Comment on a post
         async createComment(_: any, args: CommentArgs, context: Context) {

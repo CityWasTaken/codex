@@ -49,12 +49,9 @@ type Mutation {
     # User Resolvers
     createPost(postText: String, user: ID): Response
     updatePost(post: ID, postText: String): Response
-<<<<<<< HEAD
     deletePost(postId: ID): Response
-=======
+    likePost(postId: ID): Response
     createComment(commentText: String, post: ID, user: ID): Response
-
->>>>>>> 696f7312f01ad6f3dcd623f78a16b670016a520f
 }
 `;
 export default typeDefs;

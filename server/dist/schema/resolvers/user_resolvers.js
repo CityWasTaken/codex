@@ -72,7 +72,6 @@ const user_resolvers = {
             }
         },
         // Delete a post
-<<<<<<< HEAD
         async deletePost(_, args, context) {
             if (!context.req.user) {
                 return {
@@ -94,13 +93,30 @@ const user_resolvers = {
                 throw new GraphQLError(errorMessage);
             }
         },
-=======
-
-        // async deletePost(_: any, args: DeletePostArgs, context: Context) {
-        // }
->>>>>>> 696f7312f01ad6f3dcd623f78a16b670016a520f
         // Like a post
-
+        async likePost(_, args, context) {
+            if (!context.req.user) {
+                return {
+                    errors: ['You are not authorized to perform this action']
+                };
+            }
+            try {
+                const likedPost = await Post.findByIdAndUpdate(args.postId, {
+                    $inc: { likes: 1 }
+                }, { new: true });
+                if (!likedPost) {
+                    throw new GraphQLError('Post not found');
+                }
+                return {
+                    message: 'Post liked successfully!',
+                    post: likedPost
+                };
+            }
+            catch (error) {
+                const errorMessage = errorHandler(error);
+                throw new GraphQLError(errorMessage);
+            }
+        },
         // Comment on a post
         async createComment(_, args, context) {
             if (!context.req.user) {
