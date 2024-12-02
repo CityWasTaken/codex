@@ -19,9 +19,10 @@ type UpdatePostArgs = {
     postText?: string;
 }
 
-type DeletePostArgs = {
-    postId: Types.ObjectId;
-}
+// type DeletePostArgs = {
+//     postId: Types.ObjectId;
+// }
+
 type CommentArgs = {
     commentText: string;
     post: Types.ObjectId;
@@ -109,9 +110,9 @@ const user_resolvers = {
 
 
         // Delete a post
-        async deletePost(_: any, args: DeletePostArgs, context: Context) {
+        // async deletePost(_: any, args: DeletePostArgs, context: Context) {
             
-        }
+        // },
 
         // Like a post
 
@@ -167,7 +168,10 @@ const user_resolvers = {
                 await userToFollow.save();
             }
 
-            return userToFollow;
+            return {
+                message: 'You are now following this user!',
+                userToFollow
+            };
         },
 
         unfollowUser: async (_: any, { userId }: { userId: string }, context: Context) => {
@@ -187,7 +191,10 @@ const user_resolvers = {
             userToUnfollow.followers = userToUnfollow.followers.filter((id: Types.ObjectId) => id.toString() !== currentUser._id.toString());
             await userToUnfollow.save();
 
-            return userToUnfollow;
+            return {
+                message: 'You are no longer following this user!',
+                userToUnfollow
+            };
         }
     }
 }

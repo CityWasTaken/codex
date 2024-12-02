@@ -6,6 +6,8 @@ type User {
     username: String!
     email: String!
     posts: [Post]
+    following: [User]
+    followers: [User]
 }
 
 type Post {
@@ -31,6 +33,7 @@ type Response {
 }
 
 
+
 type Query {
     # Auth Queries
     getUser: Response
@@ -50,7 +53,8 @@ type Mutation {
     createPost(postText: String, user: ID): Response
     updatePost(post: ID, postText: String): Response
     createComment(commentText: String, post: ID, user: ID): Response
-
+    followUser(userId: ID!): Response
+    unfollowUser(userId: ID!): Response
 }
 `;
 export default typeDefs;
