@@ -39,8 +39,8 @@ function Header() {
         <Navbar bg="light" data-bs-theme="light">
             <Container fluid={true}>
 
-                //Nav links
-                <Navbar.Brand as={NavLink} to="/">Codex</Navbar.Brand>
+                {/* //Nav links */}
+                <Navbar.Brand as={NavLink} to="/">CodeX</Navbar.Brand>
 
 
                 <Nav className="ms-auto">
@@ -48,14 +48,15 @@ function Header() {
 
                     {state.user ? (
                         <>
-                            //links for logged in users
+                            {/* links for logged in users */}
+
                             <Nav.Link as = {NavLink} to="/profile">My Profile</Nav.Link>
                             <Nav.Link as = {NavLink} to="/landing">My Feed</Nav.Link>
                             <Nav.Link as = {NavLink} to="/followers">Followers</Nav.Link>
                             <Nav.Link as = {NavLink} to="/following">Following</Nav.Link>
 
                             <NavDropdown title="Profile Menu">
-                                <NavDropdown.ItemText className="border-bottom mb-2">{state.user.username}</NavDropdown.ItemText>
+                                <NavDropdown.ItemText className="border-bottom mb-2">Welcome Coder {state.user.username},</NavDropdown.ItemText>
                                 <NavDropdown.Item onClick={handleLogout} href="/logout">Logout</NavDropdown.Item>
                             </NavDropdown>
                         </>

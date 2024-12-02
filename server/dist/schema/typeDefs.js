@@ -50,7 +50,6 @@ type Mutation {
     createPost(postText: String, user: ID): Response
     updatePost(post: ID, postText: String): Response
     createComment(commentText: String, post: ID, user: ID): Response
-
 }
 `;
 export default typeDefs;

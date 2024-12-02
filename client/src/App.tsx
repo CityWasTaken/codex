@@ -9,8 +9,8 @@ import ProtectRoute from "./components/ProtectRoute";
 
 import AuthForm from "./pages/AuthForm";
 import Landing from "./pages/Landing";
-import Dashboard from "./pages/Dashboard/index";
-import PetForm from "./pages/PetForm";
+import PostForm from "./pages/PostForm";
+import Profile from "./pages/Profile";
 
 function App() {
   const { state } = useStore()!;
@@ -31,7 +31,7 @@ function App() {
           <Route path="/" element={<Landing />} />
 
 
-          <Route path="/register" element={(
+          <Route path="/signup" element={(
             <ProtectRoute>
               <AuthForm isLogin={false} />
             </ProtectRoute>
@@ -42,15 +42,15 @@ function App() {
             </ProtectRoute>
           )} />
 
-          <Route path="/pet/add" element={(
+          <Route path="/post/add" element={(
             <ProtectRoute>
-              <PetForm />
+              <PostForm />
             </ProtectRoute>
           )} />    
 
-          <Route path="/dashboard" element={(
+          <Route path="/profile" element={(
             <ProtectRoute>
-              <Dashboard />
+              <Profile />
             </ProtectRoute>
           )} />
         </Routes>
