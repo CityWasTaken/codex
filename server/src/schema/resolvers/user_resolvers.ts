@@ -22,7 +22,6 @@ type UpdatePostArgs = {
 // type DeletePostArgs = {
 //     postId: Types.ObjectId;
 // }
-
 type CommentArgs = {
     commentText: string;
     post: Types.ObjectId;
@@ -108,6 +107,8 @@ const user_resolvers = {
             }
         },
 
+
+        
 
         // Delete a post
         // async deletePost(_: any, args: DeletePostArgs, context: Context) {
