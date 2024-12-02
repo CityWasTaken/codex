@@ -19,9 +19,9 @@ type UpdatePostArgs = {
     postText?: string;
 }
 
-type DeletePostArgs = {
-    postId: Types.ObjectId;
-}
+// type DeletePostArgs = {
+//     postId: Types.ObjectId;
+// }
 type CommentArgs = {
     commentText: string;
     post: Types.ObjectId;
@@ -108,10 +108,12 @@ const user_resolvers = {
         },
 
 
+        
+
         // Delete a post
-        async deletePost(_: any, args: DeletePostArgs, context: Context) {
+        // async deletePost(_: any, args: DeletePostArgs, context: Context) {
             
-        }
+        // }
 
         // Like a post
 
