@@ -2,9 +2,6 @@ import Post from "../../models/Post.js";
 import User from "../../models/User.js";
 import { errorHandler } from "../helpers/index.js";
 import { GraphQLError } from "graphql";
-// type DeletePostArgs = {
-//     postId: Types.ObjectId;
-// }
 const user_resolvers = {
     Query: {
         // Get all user posts
@@ -68,8 +65,27 @@ const user_resolvers = {
             }
         },
         // Delete a post
-        // async deletePost(_: any, args: DeletePostArgs, context: Context) {
-        // }
+        async deletePost(_, args, context) {
+            if (!context.req.user) {
+                return {
+                    errors: ['You are Not authorized to perform this action']
+                };
+            }
+            try {
+                const deletePost = await Post.findByIdAndDelete(args.postId);
+                if (!deletePost) {
+                    throw new GraphQLError('Post not found');
+                }
+                return {
+                    message: 'Post deleted successfully!',
+                    post: deletePost
+                };
+            }
+            catch (error) {
+                const errorMessage = errorHandler(error);
+                throw new GraphQLError(errorMessage);
+            }
+        },
         // Like a post
         // Comment on a post
     }

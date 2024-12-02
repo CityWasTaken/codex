@@ -48,6 +48,7 @@ type Mutation {
     # User Resolvers
     createPost(postText: String, user: ID): Response
     updatePost(post: ID, postText: String): Response
+    deletePost(postId: ID): Response
 }
 `;
 export default typeDefs;

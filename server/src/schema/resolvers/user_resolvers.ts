@@ -95,8 +95,27 @@ const user_resolvers = {
 
         // Delete a post
         async deletePost(_: any, args: DeletePostArgs, context: Context) {
-            
-        }
+            if (!context.req.user) {
+                return {
+                    errors: ['You are Not authorized to perform this action']
+                }
+            }
+            try {
+                const deletePost = await Post.findByIdAndDelete(args.postId);
+
+                if (!deletePost) {
+                    throw new GraphQLError('Post not found');
+                }
+
+                return {
+                    message: 'Post deleted successfully!',
+                    post: deletePost
+                }
+            } catch (error) {
+                const errorMessage = errorHandler(error);
+                throw new GraphQLError(errorMessage);
+            }
+        },
 
 
         // Like a post
