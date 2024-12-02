@@ -49,7 +49,7 @@ const user_resolvers = {
 
         },
 
-        async getCommentsForPost(_: any, args: {post_id: Types.ObjectId}) {
+        async getCommentsForPost(_: any, args: { post_id: Types.ObjectId }) {
             const comments = Comment.find({
                 post: args.post_id
             });
@@ -114,7 +114,7 @@ const user_resolvers = {
         },
 
 
-        
+
 
         // Delete a post
         async deletePost(_: any, args: DeletePostArgs, context: Context) {
@@ -150,8 +150,8 @@ const user_resolvers = {
             }
             try {
                 const likedPost = await Post.findByIdAndUpdate(args.postId, {
-                    $inc: {likes: 1}
-                }, {new: true});
+                    $inc: { likes: 1 }
+                }, { new: true });
 
                 if (!likedPost) {
                     throw new GraphQLError('Post not found');
@@ -199,10 +199,14 @@ const user_resolvers = {
             }
         },
 
-        followUser: async (_: any, { userId }: { userId: string }, context: Context) => {
+        async followUser(_: any, { userId }: { userId: string }, context: Context) {
             const currentUser = context.req.user;
             if (!currentUser) {
                 throw new Error('You must be logged in to follow users');
+            }
+
+            if (currentUser._id.toString() === userId) {
+                throw new Error('You cannot follow yourself');
             }
 
             const userToFollow = await User.findById(userId);
@@ -224,7 +228,7 @@ const user_resolvers = {
             };
         },
 
-        unfollowUser: async (_: any, { userId }: { userId: string }, context: Context) => {
+        async unfollowUser(_: any, { userId }: { userId: string }, context: Context) {
             const currentUser = context.req.user;
             if (!currentUser) {
                 throw new Error('You must be logged in to unfollow users');
