@@ -145,10 +145,13 @@ const user_resolvers = {
                 throw new GraphQLError(errorMessage);
             }
         },
-        followUser: async (_, { userId }, context) => {
+        async followUser(_, { userId }, context) {
             const currentUser = context.req.user;
             if (!currentUser) {
                 throw new Error('You must be logged in to follow users');
+            }
+            if (currentUser._id.toString() === userId) {
+                throw new Error('You cannot follow yourself');
             }
             const userToFollow = await User.findById(userId);
             if (!userToFollow) {
@@ -165,7 +168,7 @@ const user_resolvers = {
                 userToFollow
             };
         },
-        unfollowUser: async (_, { userId }, context) => {
+        async unfollowUser(_, { userId }, context) {
             const currentUser = context.req.user;
             if (!currentUser) {
                 throw new Error('You must be logged in to unfollow users');
