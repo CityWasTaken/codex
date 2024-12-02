@@ -32,10 +32,6 @@ type Response {
 
 
 type Query {
-<<<<<<< HEAD
-    getAllPosts: [Post]
-    getPostById(id: ID): Post # To get specific Post by it's ID
-=======
     # Auth Queries
     getUser: Response
     # User Queries
@@ -51,15 +47,7 @@ type Mutation {
     logoutUser: Response
     # User Resolvers
     createPost(postText: String, user: ID): Response
->>>>>>> 2151c5b205c7a61a36ad7bce752fac634b7e05b5
-}
-
-type Mutation {
-    createPost(title: String, content: String): PostResponse
-    updatePost(id: ID, title: String, content: String): PostResponse
-    deletePost(id: ID): PostResponse
-    likePost(id: ID): PostResponse
-    commentOnPost(postId: ID, body: String): PostResponse
+    updatePost(post: ID, postText: String): Response
 }
 `;
 export default typeDefs;

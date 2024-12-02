@@ -2,6 +2,9 @@ import Post from "../../models/Post.js";
 import User from "../../models/User.js";
 import { errorHandler } from "../helpers/index.js";
 import { GraphQLError } from "graphql";
+// type DeletePostArgs = {
+//     postId: Types.ObjectId;
+// }
 const user_resolvers = {
     Query: {
         // Get all user posts
@@ -18,9 +21,6 @@ const user_resolvers = {
     },
     Mutation: {
         // Create a post
-<<<<<<< HEAD
-        async createPost(_, args) {
-=======
         async createPost(_, args, context) {
             if (!context.req.user) {
                 return {
@@ -42,10 +42,34 @@ const user_resolvers = {
                 const errorMessage = errorHandler(error);
                 throw new GraphQLError(errorMessage);
             }
->>>>>>> 2151c5b205c7a61a36ad7bce752fac634b7e05b5
-        }
+        },
         // Update a post
+        async updatePost(_, args, context) {
+            if (!context.req.user) {
+                return {
+                    errors: ['You are not authorized to perform this action']
+                };
+            }
+            try {
+                const updatedPost = await Post.findByIdAndUpdate(args.postId, {
+                    postText: args.postText
+                }, { new: true });
+                if (!updatedPost) {
+                    throw new GraphQLError('Post not found');
+                }
+                return {
+                    message: 'Post updated Successfully!',
+                    post: updatedPost
+                };
+            }
+            catch (error) {
+                const errorMessage = errorHandler(error);
+                throw new GraphQLError(errorMessage);
+            }
+        },
         // Delete a post
+        // async deletePost(_: any, args: DeletePostArgs, context: Context) {
+        // }
         // Like a post
         // Comment on a post
     }
