@@ -3,9 +3,6 @@ import Comment from "../../models/Comment.js";
 import User from "../../models/User.js";
 import { errorHandler } from "../helpers/index.js";
 import { GraphQLError } from "graphql";
-// type DeletePostArgs = {
-//     postId: Types.ObjectId;
-// }
 const user_resolvers = {
     Query: {
         // Get all user posts
@@ -75,11 +72,9 @@ const user_resolvers = {
             }
         },
         // Delete a post
-
         // async deletePost(_: any, args: DeletePostArgs, context: Context) {
         // }
         // Like a post
-
         // Comment on a post
         async createComment(_, args, context) {
             if (!context.req.user) {
