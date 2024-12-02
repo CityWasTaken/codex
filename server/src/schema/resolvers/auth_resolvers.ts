@@ -8,7 +8,6 @@ dotenv.config();
 import User from '../../models/User.js';
 import Context from '../../interfaces/Context';
 import { User as UserInterface } from '../../interfaces/User';
-
 import { errorHandler } from '../helpers/index.js';
 
 

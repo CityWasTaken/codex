@@ -78,7 +78,7 @@ const user_resolvers = {
         // Delete a post
 
 
-        // Like a post
+//         // Like a post
 
 
         // Comment on a post
@@ -117,4 +117,4 @@ const user_resolvers = {
     }
 }
 
-export default user_resolvers
+export default user_resolvers;
