@@ -36,6 +36,7 @@ type Query {
     getUser: Response
     # User Queries
     getAllUserPosts(user_id: ID): [Post]
+    getCommentsForPost(post_id: ID): [Comment]
     
 },
 
@@ -48,6 +49,8 @@ type Mutation {
     # User Resolvers
     createPost(postText: String, user: ID): Response
     updatePost(post: ID, postText: String): Response
+    createComment(commentText: String, post: ID, user: ID): Response
+
 }
 `;
 export default typeDefs;
