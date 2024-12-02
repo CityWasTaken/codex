@@ -34,3 +34,47 @@ export const LOGOUT_USER = gql`
   }
 `;
 
+export const CREATE_POST = gql`
+mutation CreatePost($postText: String, $user: ID) {
+  createPost(postText: $postText, user: $user) {
+    errors
+    message
+  }
+}
+`;
+
+export const UPDATE_POST = gql`
+mutation UpdatePost($postId: ID, $postText: String) {
+  updatePost(postId: $postId, postText: $postText) {
+    errors
+    message
+  }
+}
+`;
+
+export const DELETE_POST = gql`
+mutation DeletePost($postId: ID) {
+  deletePost(postId: $postId) {
+    errors
+    message
+  }
+}
+`;
+
+export const LIKE_POST = gql`
+mutation LikePost($postId: ID) {
+  likePost(postId: $postId) {
+    errors
+    message
+  }
+}
+`;
+
+export const CREATE_COMMENT = gql`
+mutation CreateComment($commentText: String, $post: ID, $user: ID) {
+  createComment(commentText: $commentText, post: $post, user: $user) {
+    errors
+    message
+  }
+}
+`;
