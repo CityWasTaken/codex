@@ -9,16 +9,16 @@ import public_resolvers from './resolvers/public_resolvers.js';
 
 
 const resolvers = {
-    Query: {
-        ...auth_resolvers.Query,
-        ...user_resolvers.Query,
-        ...public_resolvers.Query
-    },
+  Query: {
+    ...auth_resolvers.Query,
+    ...user_resolvers.Query,
+    ...public_resolvers.Query
+  },
 
-    Mutation: {
-        ...auth_resolvers.Mutation,
-        ...user_resolvers.Mutation
-    }
+  Mutation: {
+    ...auth_resolvers.Mutation,
+    ...user_resolvers.Mutation
+  }
 
 };
 

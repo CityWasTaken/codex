@@ -27,7 +27,7 @@ export const GET_ALL_USER_POSTS = gql`
     getAllUserPosts {
       _id
       title
-      body
+      postText
       user {
         name
       }
@@ -36,21 +36,22 @@ export const GET_ALL_USER_POSTS = gql`
 `;
 
 export const GET_USER_INFO = gql`
-  query GetUserInfo($username: String) {
-    getUserInfo(username: $username) {
-      user {
-        _id
-        followers {
-          username
-        }
-        following {
-          username
-        }
-        posts {
-          _id
-        }
+  query getUserInfo($username: String) {
+  getUserInfo(username: $username) {
+    user {
+      _id
+      followers {
         username
       }
+      following {
+        username
+      }
+      posts {
+        _id
+        postText
+      }
+      username
     }
   }
+}
 `;
