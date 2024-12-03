@@ -5,6 +5,22 @@ import { errorHandler } from "../helpers/index.js";
 import { GraphQLError } from "graphql";
 const user_resolvers = {
     Query: {
+        // Search for users
+        async searchUser(_, args) {
+            try {
+                const { username } = args;
+                const searchCriteria = {};
+                if (username) {
+                    searchCriteria.username = { $regex: username, $options: "i" }; // case-insensitive search
+                }
+                const users = await User.find(searchCriteria);
+                return users;
+            }
+            catch (error) {
+                errorHandler(error);
+                throw new GraphQLError('Error searching for users');
+            }
+        },
         // Get all user posts
         async getAllUserPosts(_, args) {
             try {

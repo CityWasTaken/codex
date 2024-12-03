@@ -41,7 +41,7 @@ type Query {
     # User Queries
     getAllUserPosts(user_id: ID): [Post]
     getCommentsForPost(post_id: ID): [Comment]
-    
+    searchUser(username: String): [User]
 },
 
 # Mutation type defines the write operations

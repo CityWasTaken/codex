@@ -8,6 +8,10 @@ import Context from "../../interfaces/Context"
 import { errorHandler } from "../helpers/index.js"
 import { GraphQLError } from "graphql"
 
+type SearchUserArgs = {
+    username: string;
+}
+
 type PostArgs = {
     postText: string;
     comments?: [Comment];
@@ -37,6 +41,24 @@ type CommentArgs = {
 const user_resolvers = {
 
     Query: {
+        // Search for users
+        async searchUser(_:any, args: SearchUserArgs) {
+            try {
+                const {username} = args;
+                const searchCriteria: any = {};
+
+                if (username) {
+                    searchCriteria.username = {$regex: username, $options: "i"}; // case-insensitive search
+                }
+
+                const users = await User.find(searchCriteria);
+                return users;
+            } catch (error) {
+                errorHandler(error);
+                throw new GraphQLError('Error searching for users');
+            }
+        },
+
         // Get all user posts
         async getAllUserPosts(_: any, args: { user_id: Types.ObjectId }) {
             try {
