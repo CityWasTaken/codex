@@ -51,7 +51,7 @@ function Header() {
                             {/* links for logged in users */}
 
                             <Nav.Link as = {NavLink} to={`/profile/${state.user.username}`}>My Profile</Nav.Link>
-                            <Nav.Link as = {NavLink} to="/landing">My Feed</Nav.Link>
+                            <Nav.Link as = {NavLink} to="/">My Feed</Nav.Link>
                             <Nav.Link as = {NavLink} to="/followers">Followers</Nav.Link>
                             <Nav.Link as = {NavLink} to="/following">Following</Nav.Link>
 

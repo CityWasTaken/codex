@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { useStore } from "./store";
 
+// import { useState } from 'react'
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -45,11 +46,35 @@ function App() {
             <ProtectRoute>
               <PostForm />
             </ProtectRoute>
-          )} />    
+          )} />
+
+          <Route path="/profile" element={(
+            <ProtectRoute>
+              <Profile />
+            </ProtectRoute>
+          )} />
 
           <Route path="/profile/:username" element={(
             <ProtectRoute>
               <Profile />
+            </ProtectRoute>
+          )} />
+
+          <Route path="/myfeed" element={(
+            <ProtectRoute>
+              <Profile />
+            </ProtectRoute>
+          )} />
+
+          <Route path="/followers" element={(
+            <ProtectRoute>
+              <PostForm />
+            </ProtectRoute>
+          )} />
+
+          <Route path="/following" element={(
+            <ProtectRoute>
+              <PostForm />
             </ProtectRoute>
           )} />
         </Routes>
