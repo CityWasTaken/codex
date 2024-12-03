@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { GET_USER_INFO } from "../graphql/queries";
 import { useStore } from "../store/index";
 import { Post } from "../interfaces";
+// import PostForm from "./PostForm";
 
 /* making the functionality of the page before pretting it up(writing so i dont confuse myself) */
  
@@ -32,8 +33,14 @@ function Profile() {
 
     const user = data.user;
     
+    if (!user) return <p>User not found</p>;
 
   return (
+        <Container>
+            <h1>{data.username}'s Profile</h1>
+            {/* <PostForm userId={user} /> */}
+            {/* Display user's posts or other profile information here */}
+    
 
     <Container fluid={true} className="mt-a">
         <Row>
@@ -75,9 +82,10 @@ function Profile() {
                 </Row>
             </Col>
         </Row>
+        </Container>
     </Container>
-  );
-}
+  )
+};
 
 export default Profile;
 
