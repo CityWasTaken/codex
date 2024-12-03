@@ -46,7 +46,7 @@ function UserForm() {
       });
 
 
-      navigate('/dashboard');
+      navigate('/profile');
     } catch (error: any) {
       setFormData({
         ...formData,
@@ -55,48 +55,59 @@ function UserForm() {
 
     }
   };
-  if (userLoading || postsLoading) return <p>Loading...</p>;
-  if (userError || postsError) return <p>Error: {userError?.message || postsError?.message}</p>;
-
-  return (
-    <Container>
-      <Form onSubmit={handleSubmit} style={{ width: '500px' }} className="mx-auto mt-5">
-        <h2 className="text-center mt-3">Create Post</h2>
-        {formData.errorMessage && (
-          <p className="text-center text-danger">{formData.errorMessage}</p>
-        )}
-
-        <Form.Group className="mb-3">
-          <Form.Label>Title</Form.Label>
-          <Form.Control name="name" onChange={handleInputChange} value={formData.name} type="text" placeholder="Enter the title of the post" />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label>Types</Form.Label>
-          <Form.Control name="type" onChange={handleInputChange} value={formData.type} type="text" placeholder="Enter the type of post" />
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label> Post</Form.Label>
-          <Form.Control name="post" onChange={handleInputChange} value={formData.post} type="string" />
-        </Form.Group>
 
 
-        <div className="d-grid gap-2">
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-        </div>
+  navigate('/dashboard');
+} catch (error: any) {
+  setFormData({
+    ...formData,
+    errorMessage: error.message
+  });
 
-        <div>
-          <h2>User Data</h2>
-          <pre>{JSON.stringify(userData, null, 2)}</pre>
-          <h2>User Posts</h2>
-          <pre>{JSON.stringify(postsData, null, 2)}</pre>
-        </div>
-      </Form>
-    </Container>
-  )
+}
+  };
+if (userLoading || postsLoading) return <p>Loading...</p>;
+if (userError || postsError) return <p>Error: {userError?.message || postsError?.message}</p>;
+
+return (
+  <Container>
+    <Form onSubmit={handleSubmit} style={{ width: '500px' }} className="mx-auto mt-5">
+      <h2 className="text-center mt-3">Create Post</h2>
+      {formData.errorMessage && (
+        <p className="text-center text-danger">{formData.errorMessage}</p>
+      )}
+
+      <Form.Group className="mb-3">
+        <Form.Label>Title</Form.Label>
+        <Form.Control name="name" onChange={handleInputChange} value={formData.name} type="text" placeholder="Enter the title of the post" />
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label>Types</Form.Label>
+        <Form.Control name="type" onChange={handleInputChange} value={formData.type} type="text" placeholder="Enter the type of post" />
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label> Post</Form.Label>
+        <Form.Control name="post" onChange={handleInputChange} value={formData.post} type="string" />
+      </Form.Group>
+
+
+      <div className="d-grid gap-2">
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </div>
+
+      <div>
+        <h2>User Data</h2>
+        <pre>{JSON.stringify(userData, null, 2)}</pre>
+        <h2>User Posts</h2>
+        <pre>{JSON.stringify(postsData, null, 2)}</pre>
+      </div>
+    </Form>
+  </Container>
+)
 }
 
 
