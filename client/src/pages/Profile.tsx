@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { GET_USER } from "../graphql/queries";
 // import { useStore } from "../store/index";
 import { Post } from "../interfaces";
-import PostForm from "./PostForm";
+// import PostForm from "./PostForm";
 
 
 
@@ -30,7 +30,7 @@ function Profile ({ userId }: { userId: string }) {
   return (
         <Container>
             <h1>{data.username}'s Profile</h1>
-            <PostForm userId={user} />
+            {/* <PostForm userId={user} /> */}
             {/* Display user's posts or other profile information here */}
     
 
