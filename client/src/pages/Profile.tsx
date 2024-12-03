@@ -65,8 +65,8 @@ function Profile() {
                 <Col lg="6" md="12" key={post._id} className="mb-4">
                   <Card className="h-100">
                     <Card.Body>
-                      <Card.Title>{post.title}</Card.Title>
-                      <Card.Text>{post.body}</Card.Text>
+                      <Card.Title>{data.getUserInfo.user.username}</Card.Title>
+                      <Card.Text>{post.postText}</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
