@@ -1,27 +1,48 @@
 import { Row, Col, Container, Card, Button } from "react-bootstrap";
 import { useQuery } from "@apollo/client";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
+<<<<<<< HEAD
 import { GET_USER } from "../graphql/queries";
 // import { useStore } from "../store/index";
+=======
+import { GET_USER_INFO } from "../graphql/queries";
+import { useStore } from "../store/index";
+>>>>>>> 3de5f336052129277f69ac63f1cdba8fa42e3b1d
 import { Post } from "../interfaces";
 // import PostForm from "./PostForm";
-
-
 
 /* making the functionality of the page before pretting it up(writing so i dont confuse myself) */
  
 
+<<<<<<< HEAD
 function Profile ({ userId }: { userId: string }) {
     //get the user from the store
     // const { state } = useStore()!;
     const { data, loading, error } = useQuery(GET_USER, {
         variables: { id: userId },
+=======
+function Profile() {
+    const { username } = useParams<{ username: string }>();
+
+    //error handling and loading screens
+    if (!username) {
+        return <div>Loading...</div>;
+    }
+
+    //get the user from the store
+    const { state } = useStore()!;
+    const { data } = useQuery(GET_USER_INFO, {
+        variables: {
+          username: username  
+        }
+>>>>>>> 3de5f336052129277f69ac63f1cdba8fa42e3b1d
     });
 
     //more error handling and loading screens
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error</p>;
+    if (!data) {
+        return <div>Loading...</div>;
+    }
 
     const user = data.user;
     
@@ -36,12 +57,19 @@ function Profile ({ userId }: { userId: string }) {
 
     <Container fluid={true} className="mt-a">
         <Row>
+<<<<<<< HEAD
             {/* //display user info */}
             <Col md="4">
                 <Card.Body>
                     <Card.Title>{user.username}</Card.Title>
                     {/* //do we need an email? ill put it in for now */}
                     <Card.Text>{user.email}</Card.Text>
+=======
+            {/* display user info */}
+            <Col md="4">
+                <Card.Body>
+                    <Card.Title>{data.getUserInfo.user.username}</Card.Title>
+>>>>>>> 3de5f336052129277f69ac63f1cdba8fa42e3b1d
 
                     <Link to="/followers">
                         <Button variant="primary" className="me-2">Followers</Button>
@@ -54,15 +82,19 @@ function Profile ({ userId }: { userId: string }) {
                 </Card.Body>
             </Col>
 
+<<<<<<< HEAD
             {/* //display posts */}
+=======
+            {/* display posts */}
+>>>>>>> 3de5f336052129277f69ac63f1cdba8fa42e3b1d
             <Col md="8">
                 <h2 className="fw-light">My Posts</h2>
                 <hr />
                 <Row className = "my-4">
-                    {user.posts.length === 0 ?(
+                    {data.getUserInfo.user.posts.length === 0 ?(
                         <p>No posts yet.</p>
                     ):(
-                        user.posts.map((post: Post) => (
+                        data.getUserInfo.user.posts.map((post: Post) => (
                             <Col lg="6" md="12" key={post._id} className="mb-4">
                                 <Card className="h-100">
                                     <Card.Body>
@@ -82,3 +114,11 @@ function Profile ({ userId }: { userId: string }) {
 };
 
 export default Profile;
+
+/*
+    <div>
+        <h1>{data.getUserInfo.user.username}'s Profile</h1>
+        <p>Followers: {data.getUserInfo.user.followers.map((user: any) => user.username).join(', ')}</p>
+        <p>Post count: {data.getUserInfo.user.posts.length}</p>
+    </div>
+*/

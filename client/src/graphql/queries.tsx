@@ -1,5 +1,15 @@
 import { gql } from "@apollo/client";
 
+export const SEARCH_USER = gql`
+query SearchUser($username: String) {
+  searchUser(username: $username) {
+    username
+    email
+    _id
+  }
+}
+`;
+
 export const GET_USER = gql`
   query GetUser {
     getUser {
@@ -20,6 +30,26 @@ export const GET_ALL_USER_POSTS = gql`
       body
       user {
         name
+      }
+    }
+  }
+`;
+
+export const GET_USER_INFO = gql`
+  query GetUserInfo($username: String) {
+    getUserInfo(username: $username) {
+      user {
+        _id
+        followers {
+          username
+        }
+        following {
+          username
+        }
+        posts {
+          _id
+        }
+        username
       }
     }
   }
