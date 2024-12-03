@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { useStore } from "./store";
 
-// import { useState } from 'react'
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -48,7 +47,7 @@ function App() {
             </ProtectRoute>
           )} />    
 
-          <Route path="/profile" element={(
+          <Route path="/profile/:username" element={(
             <ProtectRoute>
               <Profile />
             </ProtectRoute>

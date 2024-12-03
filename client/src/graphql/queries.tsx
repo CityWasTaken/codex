@@ -34,3 +34,23 @@ export const GET_ALL_USER_POSTS = gql`
     }
   }
 `;
+
+export const GET_USER_INFO = gql`
+  query GetUserInfo($username: String) {
+    getUserInfo(username: $username) {
+      user {
+        _id
+        followers {
+          username
+        }
+        following {
+          username
+        }
+        posts {
+          _id
+        }
+        username
+      }
+    }
+  }
+`;
