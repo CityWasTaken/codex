@@ -9,7 +9,8 @@ const public_resolvers = {
             })
                 .select('_id username posts following followers')
                 .populate('followers')
-                .populate('following');
+                .populate('following')
+                .populate('posts');
             return {
                 user: user
             };
