@@ -2,22 +2,22 @@ import { useStore } from "../store";
 import { useLocation, Navigate } from "react-router-dom";
 
 function ProtectRoute(props: any) {
-    const {state} = useStore()!;
-    const location = useLocation();
-    
-    // If a user is logged in keep the auth form page hidden
-    if (!state.loading && state.user && location.pathname.match(/(register|login)/gi)) {
+  const { state } = useStore()!;
+  const location = useLocation();
 
-        return <Navigate to="/dashboard" />         
-    }
+  // If a user is logged in keep the auth form page hidden
+  if (!state.loading && state.user && location.pathname.match(/(register|login)/gi)) {
 
-    // If a user is not logged in take them to the login page
-    if (!state.loading && !state.user && location.pathname.match(/(pet|post|dashboard)/gi)) {
+    return <Navigate to="/dashboard" />
+  }
 
-        return <Navigate to="/login" />
-    }
+  // If a user is not logged in take them to the login page
+  if (!state.loading && !state.user && location.pathname.match(/(pet|post|dashboard)/gi)) {
 
-    return props.children;
+    return <Navigate to="/login" />
+  }
+
+  return props.children;
 }
 
 export default ProtectRoute;

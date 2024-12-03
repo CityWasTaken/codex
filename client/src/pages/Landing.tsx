@@ -7,46 +7,46 @@ import { Post } from "../interfaces";
 
 function Landing() {
 
-    // Get all posts(loading and error handling just in case something goes wrong)
-    const { data: postData, loading, error } = useQuery(GET_ALL_USER_POSTS);
+  // Get all posts(loading and error handling just in case something goes wrong)
+  const { data: postData, loading, error } = useQuery(GET_ALL_USER_POSTS);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error loading posts :/</p>;
-
-
-    return (
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error loading posts :/</p>;
 
 
-        //container to hold all the posts
-        //the urge to name this the console is crazy, but i will resist
-        <Container fluid={true} className="mt-4">
-             <h2 className ="fw-light">Feed</h2>
-            <hr /> //this is a line to separate the header from the posts, just found this out today :
+  return (
+
+
+    //container to hold all the posts
+    //the urge to name this the console is crazy, but i will resist
+    <Container fluid={true} className="mt-4">
+      <h2 className="fw-light">Feed</h2>
+      <hr /> //this is a line to separate the header from the posts, just found this out today :
 
 
 
-            //if there are no posts, display a message saying so
-            {postData && !postData.getAllUserPosts.length && (<p>No posts yet, sign up and be the first one to add a post!</p>)}
+      //if there are no posts, display a message saying so
+      {postData && !postData.getAllUserPosts.length && (<p>No posts yet, sign up and be the first one to add a post!</p>)}
 
 
             //if there are posts, display them
-            //also using a card styling from bootstrap so it should look good i hope
-            //if not then i will put it back to the previous one that was here.
-            <Row className="my-4">
-                {postData && postData.getAllUserPosts.map((post: Post) => (
-                    <Col lg="2" md="6" sm="12" key={post._id} className="mb-4">
-                        <Card className="h-100">
-                            <Card.Body>
-                                <Card.Title>{post.title}</Card.Title>
-                                <Card.Text>{post.body}</Card.Text>
-                                <Card.Footer>Added by:{post.user?.name}</Card.Footer>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
-        </Container> 
-    )
+      //also using a card styling from bootstrap so it should look good i hope
+      //if not then i will put it back to the previous one that was here.
+      <Row className="my-4">
+        {postData && postData.getAllUserPosts.map((post: Post) => (
+          <Col lg="2" md="6" sm="12" key={post._id} className="mb-4">
+            <Card className="h-100">
+              <Card.Body>
+                <Card.Title>{post.title}</Card.Title>
+                <Card.Text>{post.body}</Card.Text>
+                <Card.Footer>Added by:{post.user?.name}</Card.Footer>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </Container>
+  )
 }
 
 
@@ -55,7 +55,7 @@ export default Landing;
 
 //leave this here for now, just in case i need to revert back to it
 
-            {/* 
+{/* 
             // Old code (temporary)
 
             <Row>

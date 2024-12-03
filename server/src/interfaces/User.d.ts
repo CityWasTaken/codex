@@ -1,9 +1,9 @@
 import { Types } from "mongoose";
 
 export interface User {
-    _id?: Types.ObjectId
-    username?: string
-    email?: string
-    password?: string
-    validatePassword(formPassword: string): boolean
+  _id?: Types.ObjectId
+  username?: string
+  email?: string
+  password?: string
+  validatePassword(formPassword: string): boolean
 }

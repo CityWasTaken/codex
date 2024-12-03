@@ -1,4 +1,4 @@
-import { Container, Nav, Navbar, NavDropdown, Form, FormControl, Button} from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown, Form, FormControl, Button } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useLazyQuery, useMutation } from "@apollo/client";
 
@@ -11,109 +11,100 @@ import { SEARCH_USER } from "../graphql/queries";
 
 
 function Header() {
-    const { state, setState } = useStore()!;
-    const [searchQuery, setSearchQuery] = useState('');
-    const [searchResults, setSearchResults] = useState([]); // State to store search results
+  const { state, setState } = useStore()!;
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]); // State to store search results
 
-    const [logoutUser] = useMutation(LOGOUT_USER, {
-        onCompleted() {
-            client.clearStore();
-        }
-    });
-
-    const [searchUsers, {loading, data}] = useLazyQuery(SEARCH_USER. {
-        onCompleted: (data) => {
-            setSearchResults(data.searchUsers);
-        }
-    })
-
-    const navigate = useNavigate();
-
-    // Logout user
-    const handleLogout = async (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-        event.preventDefault();
-
-        setState((oldState) => ({
-            ...oldState,
-            user: null
-        }));
-
-        await logoutUser();
-
-        navigate('/');
+  const [logoutUser] = useMutation(LOGOUT_USER, {
+    onCompleted() {
+      client.clearStore();
     }
+  });
 
-    const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        // Implement search logic here
-        console.log('Searching for:', searchQuery);
-        searchUsers({variables: {query: searchQuery}});
+  const [searchUsers, { loading, data }] = useLazyQuery(SEARCH_USER, {
+    onCompleted: (data) => {
+      setSearchResults(data.searchUsers);
     }
+  });
+
+  const navigate = useNavigate();
+
+  // Logout user
+  const handleLogout = async (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    event.preventDefault();
+
+    setState((oldState) => ({
+      ...oldState,
+      user: null
+    }));
+
+    await logoutUser();
+
+    navigate('/');
+  }
 
 
-    return (
-        <Navbar bg="light" data-bs-theme="light">
-            <Container fluid={true}>
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Implement search logic here
+    console.log('Searching for:', searchQuery);
+    searchUsers({ variables: { query: searchQuery } });
+  }
 
-                {/* //Nav links */}
-                <Navbar.Brand as={NavLink} to="/">CodeX</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="ms-auto">
-                        {state.user && (
-                            <Form className="d-flex" onSubmit={handleSearch}>
-                                <FormControl 
-                                    type="search"
-                                    placeholder="Search"
-                                    className="me-2"
-                                    aria-label="Search"
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                />
-                                <Button variant="outline-success" type="submit">Search</Button>
-                            </Form>
-                        )}
 
-                        <Nav.Link as={NavLink} to="/">Home</Nav.Link>
+  return (
+    <Navbar bg="light" data-bs-theme="light">
+      <Container fluid={true}>
 
-                        {state.user ? (
-                            <>
-                                {/* links for logged in users */}
+        {/* //Nav links */}
+        <Navbar.Brand as={NavLink} to="/">CodeX</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto">
+            {state.user && (
+              <Form className="d-flex" onSubmit={handleSearch}>
+                <FormControl
+                  type="search"
+                  placeholder="Search"
+                  className="me-2"
+                  aria-label="Search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <Button variant="outline-success" type="submit">Search</Button>
+              </Form>
+            )}
 
-                                <Nav.Link as={NavLink} to={`/profile/${state.user.username}`}>My Profile</Nav.Link>
-                                <Nav.Link as={NavLink} to="/">My Feed</Nav.Link>
-                                <Nav.Link as={NavLink} to="/followers">Followers</Nav.Link>
-                                <Nav.Link as={NavLink} to="/following">Following</Nav.Link>
+            <Nav.Link as={NavLink} to="/">Home</Nav.Link>
 
-                                <NavDropdown title="Profile Menu">
-                                    <NavDropdown.ItemText className="border-bottom mb-2">Welcome Coder {state.user.username},</NavDropdown.ItemText>
-                                    <NavDropdown.Item onClick={handleLogout} href="/logout">Logout</NavDropdown.Item>
-                                </NavDropdown>
-                            </>
-                        ) : (
-                            <>
-                                <Nav.Link as={NavLink} to="/signup">Sign Up</Nav.Link>
-                                <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
-                            </>
-                        )}
-                    </Nav>
-                </Navbar.Collapse>
-            </Container>
-            {/* {loading && <p>Loading...</p>}
-            {searchResults.length > 0 && (
-                <div>
-                    <h3>Search Results:</h3>
-                    <ul>
-                        {searchResults.map(user => (
-                            <li key={user.id}>
-                                <img src="" alt="" />
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )} */}
-        </Navbar>
-    )
+            <Nav className="ms-auto">
+              <Nav.Link as={NavLink} to="/">Home</Nav.Link>
+
+              {state.user ? (
+                <>
+                  {/* links for logged in users */}
+
+                  <Nav.Link as={NavLink} to={`/profile/${state.user.username}`}>My Profile</Nav.Link>
+                  <Nav.Link as={NavLink} to="/">My Feed</Nav.Link>
+                  <Nav.Link as={NavLink} to="/followers">Followers</Nav.Link>
+                  <Nav.Link as={NavLink} to="/following">Following</Nav.Link>
+
+                  <NavDropdown title="Profile Menu">
+                    <NavDropdown.ItemText className="border-bottom mb-2">Welcome Coder {state.user.username},</NavDropdown.ItemText>
+                    <NavDropdown.Item onClick={handleLogout} href="/logout">Logout</NavDropdown.Item>
+                  </NavDropdown>
+                </>
+              ) : (
+                <>
+                  <Nav.Link as={NavLink} to="/signup">Sign Up</Nav.Link>
+                  <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
+                </>
+              )}
+            </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  )
 }
 
 export default Header;

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 
 
-const Nav: React.FC = () => {
+function nav() {
     return (
         <nav>
             <ul>
