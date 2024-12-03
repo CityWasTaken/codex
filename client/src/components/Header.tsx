@@ -13,7 +13,7 @@ import { SEARCH_USER } from "../graphql/queries";
 function Header() {
   const { state, setState } = useStore()!;
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]); // State to store search results
+  // const [searchResults, setSearchResults] = useState([]); // State to store search results
 
   const [logoutUser] = useMutation(LOGOUT_USER, {
     onCompleted() {
@@ -21,11 +21,11 @@ function Header() {
     }
   });
 
-  const [searchUsers, { loading, data }] = useLazyQuery(SEARCH_USER, {
-    onCompleted: (data) => {
-      setSearchResults(data.searchUsers);
-    }
-  });
+  // const [searchUsers, { loading, data }] = useLazyQuery(SEARCH_USER, {
+  //   onCompleted: (data) => {
+  //     setSearchResults(data.searchUsers);
+  //   }
+  // });
 
   const navigate = useNavigate();
 
@@ -48,7 +48,7 @@ function Header() {
     e.preventDefault();
     // Implement search logic here
     console.log('Searching for:', searchQuery);
-    searchUsers({ variables: { query: searchQuery } });
+    // searchUsers({ variables: { query: searchQuery } });
   }
 
 
@@ -75,8 +75,6 @@ function Header() {
               </Form>
             )}
 
-            <Nav.Link as={NavLink} to="/">Home</Nav.Link>
-
             <Nav className="ms-auto">
               <Nav.Link as={NavLink} to="/">Home</Nav.Link>
 
@@ -101,8 +99,10 @@ function Header() {
                 </>
               )}
             </Nav>
+          </Nav>
         </Navbar.Collapse>
       </Container>
+
     </Navbar>
   )
 }
