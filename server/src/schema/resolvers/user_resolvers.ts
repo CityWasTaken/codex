@@ -42,13 +42,13 @@ const user_resolvers = {
 
     Query: {
         // Search for users
-        async searchUser(_:any, args: SearchUserArgs) {
+        async searchUser(_: any, args: SearchUserArgs) {
             try {
-                const {username} = args;
+                const { username } = args;
                 const searchCriteria: any = {};
 
                 if (username) {
-                    searchCriteria.username = {$regex: username, $options: "i"}; // case-insensitive search
+                    searchCriteria.username = { $regex: username, $options: "i" }; // case-insensitive search
                 }
 
                 const users = await User.find(searchCriteria);
@@ -131,7 +131,7 @@ const user_resolvers = {
                 }
             } catch (error) {
                 console.log(error);
-                
+
                 const errorMessage = errorHandler(error);
                 throw new GraphQLError(errorMessage);
             }
@@ -172,9 +172,9 @@ const user_resolvers = {
                 throw new Error('You must be logged in to like posts');
             }
             // Likes isn't a number, It's an array of users Ids
-            const postId = await Post.findByIdAndUpdate(args.postId, { $addToSet: {likes: context.req.user._id }});
+            const postId = await Post.findByIdAndUpdate(args.postId, { $addToSet: { likes: context.req.user._id } });
 
-            return{
+            return {
                 message: 'Post liked successfully!',
                 post: postId
             };
