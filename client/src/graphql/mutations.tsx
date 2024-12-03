@@ -34,3 +34,11 @@ export const LOGOUT_USER = gql`
   }
 `;
 
+export const CREATE_POST = gql`
+mutation CreatePost($userId: String, $postText: String) {
+  createPost(postText: $postText, user: $user) {
+    errors
+    message
+  }
+}
+`;
