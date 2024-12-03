@@ -2,7 +2,7 @@ import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 
-import React from "react";
+import React, { useState } from "react";
 
 import { useStore } from "../store";
 import { LOGOUT_USER } from "../graphql/mutations";
@@ -11,6 +11,7 @@ import { client } from "../main";
 
 function Header() {
     const { state, setState } = useStore()!;
+    const [searchQuery, setSearchQuery] = useState('');
 
     const [logoutUser] = useMutation(LOGOUT_USER, {
         onCompleted() {
@@ -32,6 +33,12 @@ function Header() {
         await logoutUser();
 
         navigate('/');
+    }
+
+    const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        // Implement search logic here
+        console.log('Searching for:', searchQuery);
     }
 
 
