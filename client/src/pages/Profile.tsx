@@ -2,26 +2,14 @@ import { Row, Col, Container, Card, Button } from "react-bootstrap";
 import { useQuery } from "@apollo/client";
 import { Link, useParams } from "react-router-dom";
 
-<<<<<<< HEAD
-import { GET_USER } from "../graphql/queries";
-// import { useStore } from "../store/index";
-=======
 import { GET_USER_INFO } from "../graphql/queries";
 import { useStore } from "../store/index";
->>>>>>> 3de5f336052129277f69ac63f1cdba8fa42e3b1d
 import { Post } from "../interfaces";
 // import PostForm from "./PostForm";
 
 /* making the functionality of the page before pretting it up(writing so i dont confuse myself) */
  
 
-<<<<<<< HEAD
-function Profile ({ userId }: { userId: string }) {
-    //get the user from the store
-    // const { state } = useStore()!;
-    const { data, loading, error } = useQuery(GET_USER, {
-        variables: { id: userId },
-=======
 function Profile() {
     const { username } = useParams<{ username: string }>();
 
@@ -36,7 +24,6 @@ function Profile() {
         variables: {
           username: username  
         }
->>>>>>> 3de5f336052129277f69ac63f1cdba8fa42e3b1d
     });
 
     //more error handling and loading screens
@@ -57,19 +44,10 @@ function Profile() {
 
     <Container fluid={true} className="mt-a">
         <Row>
-<<<<<<< HEAD
-            {/* //display user info */}
-            <Col md="4">
-                <Card.Body>
-                    <Card.Title>{user.username}</Card.Title>
-                    {/* //do we need an email? ill put it in for now */}
-                    <Card.Text>{user.email}</Card.Text>
-=======
             {/* display user info */}
             <Col md="4">
                 <Card.Body>
                     <Card.Title>{data.getUserInfo.user.username}</Card.Title>
->>>>>>> 3de5f336052129277f69ac63f1cdba8fa42e3b1d
 
                     <Link to="/followers">
                         <Button variant="primary" className="me-2">Followers</Button>
@@ -82,11 +60,7 @@ function Profile() {
                 </Card.Body>
             </Col>
 
-<<<<<<< HEAD
-            {/* //display posts */}
-=======
             {/* display posts */}
->>>>>>> 3de5f336052129277f69ac63f1cdba8fa42e3b1d
             <Col md="8">
                 <h2 className="fw-light">My Posts</h2>
                 <hr />
