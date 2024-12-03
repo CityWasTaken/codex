@@ -1,28 +1,27 @@
+// FILE: src/components/PostForm.tsx
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { Button, Container, Form } from 'react-bootstrap';
-import { CREATE_POST } from '../graphql/mutations';
+import { Button, Form } from 'react-bootstrap';
+import { CREATE_POST} from '../graphql/mutations';
 import { GET_ALL_USER_POSTS } from '../graphql/queries';
-import { useNavigate } from 'react-router-dom';
 
 const initialFormData = {
     postText: '',
     errorMessage: ''
 };
 
-function PostForm() {
+function PostForm({ userId }: { userId: string }) {
     const [formData, setFormData] = useState(initialFormData);
-    const [createPost] = useMutation(CREATE_POST,{
-    refetchQueries: [{query:GET_ALL_USER_POSTS}]
-});
-const navigate = useNavigate();
+    const [createPost, { loading, error }] = useMutation(CREATE_POST, {
+        refetchQueries: [{ query: GET_ALL_USER_POSTS, variables: { userId } }]
+    });
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
             [event.target.name]: event.target.value
-        })
-    }
+        });
+    };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -30,22 +29,21 @@ const navigate = useNavigate();
         try {
             await createPost({
                 variables: {
-                    ...formData,
+                    userId,
                     postText: formData.postText
                 }
             });
 
-        navigate('/profile');
-    } catch (error: any) {
-      setFormData({
-        ...formData,
-        errorMessage: error.message
-      });
-    }
-  }
+            setFormData(initialFormData); // Reset form after successful submission
+        } catch (error: any) {
+            setFormData({
+                ...formData,
+                errorMessage: error.message
+            });
+        }
+    };
 
     return (
-        <Container>
         <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
                 <Form.Label>Post Text</Form.Label>
@@ -58,15 +56,17 @@ const navigate = useNavigate();
                 />
             </Form.Group>
 
-           
-        <div className="d-grid gap-2">
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-        </div>
-      </Form>
-    </Container>
-  )
+            {formData.errorMessage && (
+                <p className="text-danger">{formData.errorMessage}</p>
+            )}
+
+            <Button variant="primary" type="submit" disabled={loading}>
+                {loading ? 'Submitting...' : 'Submit'}
+            </Button>
+
+            {error && <p className="text-danger">{error.message}</p>}
+        </Form>
+    );
 }
 
 export default PostForm;
