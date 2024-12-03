@@ -108,6 +108,8 @@ const user_resolvers = {
                     post: updatedPost
                 }
             } catch (error) {
+                console.log(error);
+                
                 const errorMessage = errorHandler(error);
                 throw new GraphQLError(errorMessage);
             }
@@ -143,28 +145,17 @@ const user_resolvers = {
 
         // Like a post
         async likePost(_: any, args: LikePostArgs, context: Context) {
-            if (!context.req.user) {
-                return {
-                    errors: ['You are not authorized to perform this action']
-                }
+            const currentUser = context.req.user;
+            if (!currentUser) {
+                throw new Error('You must be logged in to like posts');
             }
-            try {
-                const likedPost = await Post.findByIdAndUpdate(args.postId, {
-                    $inc: { likes: 1 }
-                }, { new: true });
+            // Likes isn't a number, It's an array of users Ids
+            const postId = await Post.findByIdAndUpdate(args.postId, { $addToSet: {likes: context.req.user._id }});
 
-                if (!likedPost) {
-                    throw new GraphQLError('Post not found');
-                }
-
-                return {
-                    message: 'Post liked successfully!',
-                    post: likedPost
-                }
-            } catch (error) {
-                const errorMessage = errorHandler(error);
-                throw new GraphQLError(errorMessage);
-            }
+            return{
+                message: 'Post liked successfully!',
+                post: postId
+            };
         },
 
         // Comment on a post
