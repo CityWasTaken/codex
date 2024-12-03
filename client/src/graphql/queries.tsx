@@ -3,9 +3,8 @@ import { gql } from "@apollo/client";
 export const SEARCH_USER = gql`
 query SearchUser($username: String) {
   searchUser(username: $username) {
-    username
-    email
     _id
+    username
   }
 }
 `;
