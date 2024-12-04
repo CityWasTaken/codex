@@ -79,17 +79,6 @@ function CreatePostModal({
 
         <Form>
           <Form.Group className="mb-3">
-            <Form.Label>Title</Form.Label>
-            <Form.Control
-              name="title"
-              value={formData.title}
-              type="text"
-              placeholder="Enter the title of your post"
-              autoFocus
-              onChange={handleInputChange}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
             <Form.Label>Enter the post details</Form.Label>
             <Form.Control
               name="body"
