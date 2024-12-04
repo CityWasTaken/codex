@@ -99,7 +99,7 @@ function Profile() {
                     <Card.Body>
                       <Card.Title>{data.getUserInfo.user.username}</Card.Title>
                       <Card.Text>{post.postText}</Card.Text>
-                        {state.user.username === data.getUserInfo.user.username && (
+                        {state.user?.username === data.getUserInfo.user.username && (
                         <Button variant="danger" onClick={() => handleDeletePost(post._id)}>
                           Delete
                         </Button>
