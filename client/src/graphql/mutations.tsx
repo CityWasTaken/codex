@@ -78,28 +78,3 @@ mutation CreateComment($commentText: String, $post: ID, $user: ID) {
   }
 }
 `;
-
-export const FOLLOW_USER = gql`
-mutation FollowUser($userId: ID!) {
-  followUser(userId: $userId) {
-    user {
-      username
-    }
-    errors
-    message
-  }
-}
-`;
-
-export const UNFOLLOW_USER = gql`
-mutation UnfollowUser($userId: ID!) {
-  unfollowUser(userId: $userId) {
-    user {
-      _id
-      username
-    }
-    errors
-    message
-  }
-}
-`;
