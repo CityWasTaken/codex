@@ -1,11 +1,11 @@
 import { Row, Col, Container, Card, Button } from "react-bootstrap";
 import { useQuery, useMutation } from "@apollo/client";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, NavLink } from "react-router-dom";
 
 import { GET_USER_INFO } from "../graphql/queries";
 import { DELETE_POST } from "../graphql/mutations";
 import { useStore } from "../store/index";
-import { Post } from "../interfaces";
+import { Post, User } from "../interfaces";
 import CreatePostModal from "./Profile/components/CreatePostModal";
 import { useState } from "react";
 import ViewPostModal from "./Profile/components/ViewPostModal";
@@ -21,15 +21,18 @@ function Profile() {
 
 
   const handleShowCreatePostModal = () => setShowCreatePostModal(true);
-  const [deletePost] = useMutation(DELETE_POST);
+  const [deletePost] = useMutation(DELETE_POST, {
+    refetchQueries: [{query: GET_USER_INFO, variables: {username}}],
+  });
 
   const handleDeletePost = async (id: string) => {
-    await deletePost({ variables: { id } });
     try {
+      await deletePost({variables: {id}});
     } catch (error) {
-      console.error('Error deleting post:', error);
+      console.log('Error deleting post:', error);
     }
   };
+
   interface HandleViewPost {
     (post: Post): void;
   }
@@ -45,17 +48,18 @@ function Profile() {
 
   //get the user from the store
   const { state } = useStore()!;
-  const { data } = useQuery(GET_USER_INFO, {
+  const { data, loading, error } = useQuery(GET_USER_INFO, {
     variables: { username }
   });
 
   //more error handling and loading screens
-  if (!data) {
+  if (loading) {
     return <div>Loading...</div>;
   }
-  // console.log(data); // Log the data to inspect its structure
 
-  // const user = data.user;
+  if (error) {
+    return <div>Error loading user data</div>;
+  }
 
 
   return (
@@ -95,7 +99,7 @@ function Profile() {
                     <Card.Body>
                       <Card.Title>{data.getUserInfo.user.username}</Card.Title>
                       <Card.Text>{post.postText}</Card.Text>
-                        {state.user.username === data.getUserInfo.user.username && (
+                        {state.user?.username === data.getUserInfo.user.username && (
                         <Button variant="danger" onClick={() => handleDeletePost(post._id)}>
                           Delete
                         </Button>
@@ -103,6 +107,16 @@ function Profile() {
                       <Button variant="info" onClick={() => handleViewPost(post)}>
                         View
                       </Button>
+                      {/* <div className='likes'>
+                        <h4>Liked By:</h4>
+                        <ul>
+                          {post.likes.map((user: User) => (
+                          <li key={user._id}>
+                            <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
+                          </li>
+                          ))}
+                        </ul>
+                      </div> */}
                     </Card.Body>
                   </Card>
                 </Col>

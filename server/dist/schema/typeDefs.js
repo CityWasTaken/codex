@@ -14,7 +14,7 @@ type Post {
   _id: ID
   title: String
   postText: String
-  author: User # The author of the post or comment, aka the User type
+  user: User # The author of the post or comment, aka the User type
   likes: Int
   comments: [Comment]
 }
@@ -22,7 +22,7 @@ type Post {
 type Comment {
   _id: ID
   commentText: String
-  author: User 
+  user: User 
   post: Post
 }
 

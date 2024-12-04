@@ -27,6 +27,12 @@ export const GET_ALL_USER_POSTS = gql`
       _id
       title
       postText
+      comments {
+        commentText
+        user {
+          username
+        }
+      }
       user {
         name
       }
@@ -48,9 +54,31 @@ export const GET_USER_INFO = gql`
       posts {
         _id
         postText
+        user {
+          username
+        }
+        comments {
+          _id
+          commentText
+          user {
+            username
+          }
+        }
       }
       username
     }
   }
 }
+`;
+
+export const GET_COMMENTS_FOR_POST = gql`
+  query GetCommentsForPost($post_id: ID) {
+    getCommentsForPost(post_id: $post_id) {
+      _id
+      commentText
+      user {
+        username
+      }
+    }
+  }
 `;
