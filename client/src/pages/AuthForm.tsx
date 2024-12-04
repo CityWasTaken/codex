@@ -50,7 +50,7 @@ function AuthForm({ isLogin }: { isLogin: boolean }) {
         user: res.data[prop].user
       }));
 
-      navigate('/dashboard');
+      navigate('/profile');
     } catch (error: any) {
       setFormData({
         ...formData,

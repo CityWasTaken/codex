@@ -1,24 +1,45 @@
-import React, { useState } from 'react';
-import { Form, Button, Card, Alert } from 'react-bootstrap';
+import { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { LOGIN_USER } from '../graphql/mutations';
 
-
-const Login = () => {
+function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [login, { loading, error }] = useMutation(LOGIN_USER);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-  }
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      const { data } = await login({ variables: { email, password } });
+      if (data.login.token) {
+        localStorage.setItem('token', data.login.token);
+        window.location.href = '/profile'; // Redirect to profile page
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
-    <Card style >
-      <></>
-    </>
-
-
-  )
-
-
+    <form onSubmit={handleLogin}>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+      />
+      <button type="submit" disabled={loading}>
+        {loading ? 'Logging in...' : 'Login'}
+      </button>
+      {error && <p>Error logging in</p>}
+    </form>
+  );
 }
+
+export default Login;
