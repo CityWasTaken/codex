@@ -85,11 +85,6 @@ function Header() {
                   {/* links for logged in users */}
 
                   <Nav.Link as={NavLink} to={`/profile/${state.user.username}`}>My Profile</Nav.Link>
-<<<<<<< HEAD
-
-                  {/*this sends you right to home, i will fix this*/}
-=======
->>>>>>> ed4a570c44bc9657daa595b30e0e499cb7d3993d
                   <Nav.Link as={NavLink} to="/myfeed">My Feed</Nav.Link>
 
                   <NavDropdown title="Profile Menu">
