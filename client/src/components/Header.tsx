@@ -86,8 +86,6 @@ function Header() {
 
                   <Nav.Link as={NavLink} to={`/profile/${state.user.username}`}>My Profile</Nav.Link>
                   <Nav.Link as={NavLink} to="/">My Feed</Nav.Link>
-                  <Nav.Link as={NavLink} to="/followers">Followers</Nav.Link>
-                  <Nav.Link as={NavLink} to="/following">Following</Nav.Link>
 
                   <NavDropdown title="Profile Menu">
                     <NavDropdown.ItemText className="border-bottom mb-2">Welcome, {state.user.username}</NavDropdown.ItemText>

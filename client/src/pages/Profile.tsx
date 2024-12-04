@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { GET_USER_INFO } from "../graphql/queries";
 import { DELETE_POST } from "../graphql/mutations";
-// import { useStore } from "../store/index";
+import { useStore } from "../store/index";
 import { Post } from "../interfaces";
 import CreatePostModal from "./Profile/components/CreatePostModal";
 import { useState } from "react";
@@ -24,7 +24,7 @@ function Profile() {
   const [deletePost] = useMutation(DELETE_POST);
 
   const handleDeletePost = async (id: string) => {
-      await deletePost({ variables: { id } });
+    await deletePost({ variables: { id } });
     try {
     } catch (error) {
       console.error('Error deleting post:', error);
@@ -44,7 +44,7 @@ function Profile() {
   }
 
   //get the user from the store
-  // const { state } = useStore()!;
+  const { state } = useStore()!;
   const { data } = useQuery(GET_USER_INFO, {
     variables: { username }
   });
@@ -53,7 +53,7 @@ function Profile() {
   if (!data) {
     return <div>Loading...</div>;
   }
-  console.log(data); // Log the data to inspect its structure
+  // console.log(data); // Log the data to inspect its structure
 
   // const user = data.user;
 
@@ -84,7 +84,7 @@ function Profile() {
           <hr />
           <Button variant="primary" onClick={handleShowCreatePostModal}>
             Add New Post
-            </Button>
+          </Button>
           <Row className="my-4">
             {data.getUserInfo.user.posts.length === 0 ? (
               <p>No posts yet.</p>
@@ -95,12 +95,14 @@ function Profile() {
                     <Card.Body>
                       <Card.Title>{data.getUserInfo.user.username}</Card.Title>
                       <Card.Text>{post.postText}</Card.Text>
-                      <Button variant="danger" onClick={() => handleDeletePost(post._id)}>
-                      Delete
-                    </Button>
-                    <Button variant="info" onClick={() => handleViewPost(post)}>
-                      View
-                    </Button>
+                        {state.user.username === data.getUserInfo.user.username && (
+                        <Button variant="danger" onClick={() => handleDeletePost(post._id)}>
+                          Delete
+                        </Button>
+                        )}
+                      <Button variant="info" onClick={() => handleViewPost(post)}>
+                        View
+                      </Button>
                     </Card.Body>
                   </Card>
                 </Col>
@@ -114,7 +116,7 @@ function Profile() {
         setShowCreatePostModal={setShowCreatePostModal}
         selectedUser={data.getUserInfo.user}
       />
-      
+
       <ViewPostModal
         showViewPostModal={showViewPostModal}
         setShowViewPostModal={setShowViewPostModal}
@@ -132,4 +134,11 @@ export default Profile;
         <p>Followers: {data.getUserInfo.user.followers.map((user: any) => user.username).join(', ')}</p>
         <p>Post count: {data.getUserInfo.user.posts.length}</p>
     </div>
+*/
+
+// <h1>Followers</h1>
+/*
+  <Card.Body>
+    <Card.Title>{data.getUserInfo.user.followers.username}</Card.Title>
+  </Card.Body>
 */
