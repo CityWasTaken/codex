@@ -19,7 +19,7 @@ function Profile() {
 
   //get the user from the store
   // const { state } = useStore()!;
-  const { data } = useQuery(GET_USER_INFO, {
+  const { data, loading, error } = useQuery(GET_USER_INFO, {
     variables: {
       username: username
     }
@@ -29,6 +29,10 @@ function Profile() {
   if (!data) {
     return <div>Loading...</div>;
   }
+  // if (loading) return <div>Loading...</div>;
+  // if (error) return <div>Error loading profile</div>
+
+  // const user = data.getUserInfo.user;
 
   // const user = data.user;
 
