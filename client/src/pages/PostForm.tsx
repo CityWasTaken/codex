@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Button, Container, Form } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { CREATE_POST } from '../graphql/mutations';
@@ -71,7 +71,7 @@ function PostForm() {
 
       {formData.errorMessage && <p className="text-center text-danger">{formData.errorMessage}</p>}
 
-      <div className='likes'>
+      {/* <div className='likes'>
         <h4>Liked By:</h4>
         <ul>
           {likedUsers.map(user => (
@@ -80,7 +80,7 @@ function PostForm() {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
     </Container>
   );
 }
