@@ -88,3 +88,10 @@ export default Profile;
         <p>Post count: {data.getUserInfo.user.posts.length}</p>
     </div>
 */
+
+// <h1>Followers</h1>
+/*
+  <Card.Body>
+    <Card.Title>{data.getUserInfo.user.followers.username}</Card.Title>
+  </Card.Body>
+*/
