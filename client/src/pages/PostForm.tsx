@@ -10,6 +10,7 @@ const initialFormData = {
     errorMessage: ''
 };
 
+
 function PostForm() {
     const [formData, setFormData] = useState(initialFormData);
     const [createPost] = useMutation(CREATE_POST,{
@@ -44,21 +45,23 @@ const navigate = useNavigate();
     }
   }
 
-    return (
-        <Container>
-        <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
-                <Form.Label>Post Text</Form.Label>
-                <Form.Control
-                    name="postText"
-                    onChange={handleInputChange}
-                    value={formData.postText}
-                    type="text"
-                    placeholder="Enter your post"
-                />
-            </Form.Group>
+  return (
+    <Container>
+      <Form onSubmit={handleSubmit} style={{ width: '500px' }} className="mx-auto mt-5">
+        <h2 className="text-center mt-3">Create Post</h2>
 
-           
+        {formData.errorMessage && (
+          <p className="text-center text-danger">{formData.errorMessage}</p>
+        )}
+
+        
+        <Form.Group className="mb-3">
+          <Form.Label>Text</Form.Label>
+          <Form.Control name="type" onChange={handleInputChange} value={formData.postText} type="text" placeholder="Enter your post" />
+        </Form.Group>
+
+    
+
         <div className="d-grid gap-2">
           <Button variant="primary" type="submit">
             Submit
@@ -70,3 +73,4 @@ const navigate = useNavigate();
 }
 
 export default PostForm;
+

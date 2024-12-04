@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ProtectRoute from "./components/ProtectRoute";
 
+import ContactForm from "./pages/ContactForm";
 import AuthForm from "./pages/AuthForm";
 import Landing from "./pages/Landing";
 import PostForm from "./pages/PostForm";
@@ -76,6 +77,12 @@ function App() {
             <ProtectRoute>
               <PostForm />
             </ProtectRoute>
+            )} />
+
+             <Route path="/contact" element={(
+              <ProtectRoute>
+                <ContactForm />
+              </ProtectRoute>
           )} />
         </Routes>
       </main>

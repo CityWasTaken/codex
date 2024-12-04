@@ -8,11 +8,11 @@ function ProtectRoute(props: any) {
   // If a user is logged in keep the auth form page hidden
   if (!state.loading && state.user && location.pathname.match(/(register|login)/gi)) {
 
-    return <Navigate to="/dashboard" />
+    return <Navigate to="/profile" />
   }
 
   // If a user is not logged in take them to the login page
-  if (!state.loading && !state.user && location.pathname.match(/(pet|post|dashboard)/gi)) {
+  if (!state.loading && !state.user && location.pathname.match(/(post|profile)/gi)) {
 
     return <Navigate to="/login" />
   }
