@@ -88,7 +88,7 @@ function Header() {
                   <Nav.Link as={NavLink} to="/myfeed">My Feed</Nav.Link>
 
                   <NavDropdown title="Profile Menu">
-                    <NavDropdown.ItemText className="border-bottom mb-2">Welcome Coder {state.user.username},</NavDropdown.ItemText>
+                    <NavDropdown.ItemText className="border-bottom mb-2">Welcome, {state.user.username}</NavDropdown.ItemText>
                     <NavDropdown.Item onClick={handleLogout} href="/logout">Logout</NavDropdown.Item>
                   </NavDropdown>
                 </>
