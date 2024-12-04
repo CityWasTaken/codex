@@ -1,8 +1,8 @@
 import { Row, Col, Container, Card, Button } from "react-bootstrap";
-import { useQuery, useMutation } from "@apollo/client";
+import { gql, useQuery, useMutation } from "@apollo/client";
 import { Link, NavLink, useParams } from "react-router-dom";
 
-import { GET_USER_INFO } from "../graphql/queries";
+import { GET_ALL_USER_POSTS, GET_USER_INFO } from "../graphql/queries";
 import { DELETE_POST, FOLLOW_USER } from "../graphql/mutations";
 import { useStore } from "../store/index";
 import { Post } from "../interfaces";
@@ -19,9 +19,14 @@ function Profile() {
   const [showViewPostModal, setShowViewPostModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
+  const {data} = useQuery(GET_ALL_USER_POSTS, {
+    variables: {username}
+  });
 
   const handleShowCreatePostModal = () => setShowCreatePostModal(true);
-  const [deletePost] = useMutation(DELETE_POST);
+  const [deletePost] = useMutation(DELETE_POST, {
+    refetchQueries: [{query: GET_ALL_USER_POSTS, variables: {username}}],
+  });
 
   const handleDeletePost = async (postId: string) => {
     try{
@@ -53,7 +58,7 @@ function Profile() {
 
   //get the user from the store
   const { state } = useStore()!;
-  const { data, loading, error } = useQuery(GET_USER_INFO, {
+  const { data} = useQuery(GET_USER_INFO, {
     variables: { username }
   });
   const [isFollowing, setIsFollowing] = useState(false);
@@ -129,17 +134,7 @@ function Profile() {
                       )}
                       <Button variant="info" onClick={() => handleViewPost(post)}>
                         View
-                      </Button>
-                      {/* <div className='likes'>
-                        <h4>Liked By:</h4>
-                        <ul>
-                          {post.likes.map((user: User) => (
-                          <li key={user._id}>
-                            <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
-                          </li>
-                          ))}
-                        </ul>
-                      </div> */}
+                      </Button>                     
                     </Card.Body>
                   </Card>
                 </Col>
@@ -179,3 +174,14 @@ export default Profile;
     <Card.Title>{data.getUserInfo.user.followers.username}</Card.Title>
   </Card.Body>
 */
+
+/* <div className='likes'>
+                        <h4>Liked By:</h4>
+                        <ul>
+                          {post.likes.map((user: User) => (
+                          <li key={user._id}>
+                            <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
+                          </li>
+                          ))}
+                        </ul>
+                      </div> */
