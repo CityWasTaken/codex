@@ -69,7 +69,6 @@ function Profile() {
   const handleFollow = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    const followStatus = isFollowing ? 'followUser' : 'unfollowUser';
 
     try {
       await followUser({ variables: { username } });
@@ -82,6 +81,8 @@ function Profile() {
   //more error handling and loading screens
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error loading user data</div>;
+
+
 
 
   return (

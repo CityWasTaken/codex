@@ -1,13 +1,7 @@
-import React from 'react'
-import { Row, Col, Container, Card, ListGroup } from "react-bootstrap";
+import { Container, Card } from "react-bootstrap";
 
 
-const Followers = () => {
-
-
-
-
-
+function Followers() {
 
   return (
     <Container>
@@ -18,3 +12,4 @@ const Followers = () => {
   )
 }
 
+export default Followers;
