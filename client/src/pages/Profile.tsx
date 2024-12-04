@@ -1,11 +1,11 @@
 import { Row, Col, Container, Card, Button } from "react-bootstrap";
 import { useQuery, useMutation } from "@apollo/client";
-import { Link, useParams, NavLink } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 
 import { GET_USER_INFO } from "../graphql/queries";
-import { DELETE_POST } from "../graphql/mutations";
+import { DELETE_POST, FOLLOW_USER } from "../graphql/mutations";
 import { useStore } from "../store/index";
-import { Post, User } from "../interfaces";
+import { Post } from "../interfaces";
 import CreatePostModal from "./Profile/components/CreatePostModal";
 import { useState } from "react";
 import ViewPostModal from "./Profile/components/ViewPostModal";
@@ -22,12 +22,12 @@ function Profile() {
 
   const handleShowCreatePostModal = () => setShowCreatePostModal(true);
   const [deletePost] = useMutation(DELETE_POST, {
-    refetchQueries: [{query: GET_USER_INFO, variables: {username}}],
+    refetchQueries: [{ query: GET_USER_INFO, variables: { username } }],
   });
 
   const handleDeletePost = async (id: string) => {
     try {
-      await deletePost({variables: {id}});
+      await deletePost({ variables: { id } });
     } catch (error) {
       console.log('Error deleting post:', error);
     }
@@ -51,6 +51,23 @@ function Profile() {
   const { data, loading, error } = useQuery(GET_USER_INFO, {
     variables: { username }
   });
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [followUser] = useMutation(FOLLOW_USER, {
+    refetchQueries: [{ query: GET_USER_INFO, variables: { username } }],
+  });
+
+  const handleFollow = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    const followStatus = isFollowing ? 'followUser' : 'unfollowUser';
+
+    try {
+      await followUser({ variables: { username } });
+      setIsFollowing(!isFollowing);
+    } catch (error) {
+      console.log('Error following user:', error);
+    }
+  };
 
   //more error handling and loading screens
   if (loading) {
@@ -76,8 +93,12 @@ function Profile() {
             </Link>
 
             <Link to="/following">
-              <Button variant="primary">Following</Button>
+              <Button variant="primary" className="me-2">Following</Button>
             </Link>
+
+            <Button onClick={(event) => handleFollow(event)}>
+              {isFollowing ? 'Unfollow' : 'Follow'}
+            </Button>
 
           </Card.Body>
         </Col>
@@ -97,13 +118,15 @@ function Profile() {
                 <Col lg="6" md="12" key={post._id} className="mb-4">
                   <Card className="h-100">
                     <Card.Body>
+                    <NavLink to={`/profile/${data.getUserInfo.user.username}`}>
                       <Card.Title>{data.getUserInfo.user.username}</Card.Title>
+                    </NavLink>
                       <Card.Text>{post.postText}</Card.Text>
-                        {state.user.username === data.getUserInfo.user.username && (
+                      {state.user?.username === data.getUserInfo.user.username && (
                         <Button variant="danger" onClick={() => handleDeletePost(post._id)}>
                           Delete
                         </Button>
-                        )}
+                      )}
                       <Button variant="info" onClick={() => handleViewPost(post)}>
                         View
                       </Button>
