@@ -1,26 +1,26 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
-// Post Component 
-function Post({ post }) {
-    return (
-        <div className="post">
-            <h3>{post.title}</h3>
-            <p>{post.body}</p>
-            <div className="likes">
-                <h4>Liked By:</h4>
-                <ul>
-                    {post.likes.map(user => (
-                        <li key={user._id}>
-                            <Link to={`/profile/${user.username}`}>{user.username}</Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </div>
-    );
-}
+// // Post Component 
+// function Post({ post }) {
+//     return (
+//         <div className="post">
+//             <h3>{post.title}</h3>
+//             <p>{post.body}</p>
+//             <div className="likes">
+//                 <h4>Liked By:</h4>
+//                 <ul>
+//                     {post.likes.map(user => (
+//                         <li key={user._id}>
+//                             <Link to={`/profile/${user.username}`}>{user.username}</Link>
+//                         </li>
+//                     ))}
+//                 </ul>
+//             </div>
+//         </div>
+//     );
+// }
 
-export default Post;
+// export default Post;
 
 // import { useState } from 'react';
 // import { useMutation } from '@apollo/client';
