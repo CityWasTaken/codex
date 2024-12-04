@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Button, Form, Modal, Alert } from 'react-bootstrap';
-import { useMutation } from '@apollo/client';
+import { useMutation} from '@apollo/client';
 
-import { CREATE_POST } from '../../graphql/mutations';
-import { GET_ALL_USER_POSTS } from '../../graphql/queries';
-import { Post } from '../../interfaces';
+import { CREATE_POST } from '../../../graphql/mutations';
+import { GET_ALL_USER_POSTS } from '../../../graphql/queries';
+import { Post } from '../../../interfaces';
+
 
 const initialFormData = {
   title: '',
@@ -28,7 +29,7 @@ function CreatePostModal({
     refetchQueries: [{
       query: GET_ALL_USER_POSTS,
       variables: {
-        petId: selectedUser?._id
+        userId: selectedUser?._id
       }
     }, { query: GET_ALL_USER_POSTS}]
   });
@@ -50,7 +51,8 @@ function CreatePostModal({
       await createPost({
         variables: {
           ...formData,
-          user: selectedUser?._id
+          user: selectedUser?._id,
+          postText: formData.body
         }
       });
 
@@ -68,7 +70,8 @@ function CreatePostModal({
   return (
     <Modal show={showCreatePostModal} onHide={handleModalClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Create post for {selectedUser?._id}</Modal.Title>
+        {/* <Modal.Title>Create post for {selectedUser?._id}</Modal.Title> */}
+        <Modal.Title>Tell Us What's On Your Mind Coder...</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
