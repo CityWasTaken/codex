@@ -60,32 +60,6 @@ function Header() {
         <Navbar.Brand as={NavLink} to="/">CodeX</Navbar.Brand>
 
 
-        <Nav className="ms-auto">
-          <Nav.Link as={NavLink} to="/">Home</Nav.Link>
-
-          {state.user ? (
-            <>
-              {/* links for logged in users */}
-
-              <Nav.Link as={NavLink} to={`/profile/${state.user.username}`}>My Profile</Nav.Link>
-              <Nav.Link as={NavLink} to="/myfeed">My Feed</Nav.Link>
-              <Nav.Link as={NavLink} to="/followers">Followers</Nav.Link>
-              <Nav.Link as={NavLink} to="/following">Following</Nav.Link>
-              <Nav.Link as={NavLink} to="/contact">Contact Us</Nav.Link>
-
-              <NavDropdown title="Profile Menu">
-                <NavDropdown.ItemText className="border-bottom mb-2">Welcome Coder {state.user.username},</NavDropdown.ItemText>
-                <NavDropdown.Item onClick={handleLogout} href="/logout">Logout</NavDropdown.Item>
-              </NavDropdown>
-            </>
-          ) : (
-            <>
-              <Nav.Link as={NavLink} to="/signup">Sign Up</Nav.Link>
-              <Nav.Link as={NavLink} to="/login">Login</Nav.Link>
-            </>
-          )}
-        </Nav>
-
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
@@ -112,8 +86,6 @@ function Header() {
 
                   <Nav.Link as={NavLink} to={`/profile/${state.user.username}`}>My Profile</Nav.Link>
                   <Nav.Link as={NavLink} to="/">My Feed</Nav.Link>
-                  <Nav.Link as={NavLink} to="/followers">Followers</Nav.Link>
-                  <Nav.Link as={NavLink} to="/following">Following</Nav.Link>
 
                   <NavDropdown title="Profile Menu">
                     <NavDropdown.ItemText className="border-bottom mb-2">Welcome Coder {state.user.username},</NavDropdown.ItemText>
