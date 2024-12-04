@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 
 
-function nav() {
+function Nav() {
     return (
         <nav>
             <ul>

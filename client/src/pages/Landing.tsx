@@ -14,11 +14,11 @@ function Landing() {
       </Row>
       <Container>
         <h3 className="text-center fw-light">A social network for Coders...</h3>
-        <h3 className="text-center fw-light">Log In to See What Your Fellow Coders are up to! </h3>
+        <h3 className="text-center fw-light">Log in to see what your fellow Coders are up to! </h3>
         <hr />
 
         {postData && !postData.getAllPosts.length && (
-          <p> Log in and join the Conversation!</p>
+          <p> Log in and join the conversation!</p>
         )}
       </Container>
     </Container>
