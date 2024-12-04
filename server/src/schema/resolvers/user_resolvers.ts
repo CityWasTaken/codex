@@ -62,7 +62,18 @@ const user_resolvers = {
     // Get all user posts
     async getAllUserPosts(_: any, args: { user_id: Types.ObjectId }) {
       try {
-        const posts = await Post.find({ user: args.user_id });
+        const posts = await Post.find({ user: args.user_id })
+          .populate({
+            path: 'comments',
+            select: 'commentText user',
+            populate: {
+              path: 'user',
+              select: 'username'
+            }
+          });
+
+          console.log(posts);
+          
         return posts;
       } catch (error) {
         errorHandler(error);
@@ -72,9 +83,18 @@ const user_resolvers = {
     },
 
     async getCommentsForPost(_: any, args: { post_id: Types.ObjectId }) {
-      const comments = Comment.find({
+      console.log(args);
+
+
+      const comments = await Comment.find({
         post: args.post_id
-      });
+      })
+        .populate({
+          path: 'user',
+          select: 'username',
+
+        });
+
 
       return comments;
     }

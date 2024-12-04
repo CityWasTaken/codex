@@ -1,5 +1,4 @@
 import User from "../../models/User.js";
-import Comment from "../../models/Comment.js";
 // import { errorHandler } from "../helpers/index.js"
 // import { GraphQLError } from "graphql"
 const public_resolvers = {
@@ -11,16 +10,26 @@ const public_resolvers = {
                 .select('_id username posts following followers')
                 .populate('followers')
                 .populate('following')
-                .populate('posts');
+                .populate({
+                path: 'posts',
+                populate: [
+                    {
+                        path: 'user',
+                        select: 'username'
+                    },
+                    {
+                        path: 'comments',
+                        select: 'commentText user',
+                        populate: {
+                            path: 'user',
+                            select: 'username'
+                        }
+                    }
+                ]
+            });
             return {
                 user: user
             };
-        },
-        async getCommentsForPost(_, args) {
-            const comments = Comment.find({
-                post: args.post_id
-            });
-            return comments;
         }
     }
 };
