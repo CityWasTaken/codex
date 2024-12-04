@@ -21,6 +21,8 @@ function MyFeed() {
     const posts = data.getAllUserPosts
 
 
+  //i keep getting he load screen, not sure what that is about
+
   return (
     <Container>
       <h1 className= 'my-4'>My Feed</h1>
