@@ -1,13 +1,13 @@
 import { Container, Nav, Navbar, NavDropdown, Form, FormControl, Button } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
 import React, { useState } from "react";
 
 import { useStore } from "../store";
 import { LOGOUT_USER } from "../graphql/mutations";
 import { client } from "../main";
-import { SEARCH_USER } from "../graphql/queries";
+
 
 
 function Header() {

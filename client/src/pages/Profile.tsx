@@ -59,7 +59,6 @@ function Profile() {
   const handleFollow = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    const followStatus = isFollowing ? 'followUser' : 'unfollowUser';
 
     try {
       await followUser({ variables: { username } });
