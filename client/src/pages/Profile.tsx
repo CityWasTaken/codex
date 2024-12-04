@@ -1,6 +1,6 @@
 import { Row, Col, Container, Card, Button } from "react-bootstrap";
 import { useQuery, useMutation } from "@apollo/client";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, NavLink } from "react-router-dom";
 
 import { GET_USER_INFO } from "../graphql/queries";
 import { DELETE_POST } from "../graphql/mutations";
@@ -24,7 +24,7 @@ function Profile() {
   const [deletePost] = useMutation(DELETE_POST);
 
   const handleDeletePost = async (id: string) => {
-      await deletePost({ variables: { id } });
+    await deletePost({ variables: { id } });
     try {
     } catch (error) {
       console.error('Error deleting post:', error);
@@ -84,7 +84,7 @@ function Profile() {
           <hr />
           <Button variant="primary" onClick={handleShowCreatePostModal}>
             Add New Post
-            </Button>
+          </Button>
           <Row className="my-4">
             {data.getUserInfo.user.posts.length === 0 ? (
               <p>No posts yet.</p>
@@ -96,11 +96,21 @@ function Profile() {
                       <Card.Title>{data.getUserInfo.user.username}</Card.Title>
                       <Card.Text>{post.postText}</Card.Text>
                       <Button variant="danger" onClick={() => handleDeletePost(post._id)}>
-                      Delete
-                    </Button>
-                    <Button variant="info" onClick={() => handleViewPost(post)}>
-                      View
-                    </Button>
+                        Delete
+                      </Button>
+                      <Button variant="info" onClick={() => handleViewPost(post)}>
+                        View
+                      </Button>
+                      <div className='likes'>
+                        <h4>Liked By:</h4>
+                        <ul>
+                          {post.likes.map(user => (
+                            <li key={user._id}>
+                              <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </Card.Body>
                   </Card>
                 </Col>
@@ -114,7 +124,7 @@ function Profile() {
         setShowCreatePostModal={setShowCreatePostModal}
         selectedUser={data.getUserInfo.user}
       />
-      
+
       <ViewPostModal
         showViewPostModal={showViewPostModal}
         setShowViewPostModal={setShowViewPostModal}

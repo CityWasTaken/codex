@@ -1,13 +1,17 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Button, Container, Form } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { CREATE_POST } from '../graphql/mutations';
 import { useNavigate } from 'react-router-dom';
 
+const initialFormData = {
+  postText: '',
+  errorMessage: ''
+};
 
 function PostForm() {
-  const [formData, setFormData] = useState({ postText: '', errorMessage: '' });
+  const [formData, setFormData] = useState(initialFormData);
   const [createPost] = useMutation(CREATE_POST);
   const navigate = useNavigate();
 
@@ -68,11 +72,11 @@ function PostForm() {
       {formData.errorMessage && <p className="text-center text-danger">{formData.errorMessage}</p>}
 
       <div className='likes'>
-        <h4>Liked by:</h4>
+        <h4>Liked By:</h4>
         <ul>
           {likedUsers.map(user => (
             <li key={user._id}>
-              <Link to={`/profile/${user.username}`}>{user.username}</Link>
+              <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
             </li>
           ))}
         </ul>
