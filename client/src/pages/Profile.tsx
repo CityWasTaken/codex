@@ -21,23 +21,28 @@ function Profile() {
 
 
   const handleShowCreatePostModal = () => setShowCreatePostModal(true);
-  const [deletePost] = useMutation(DELETE_POST, {
-    refetchQueries: [{query: GET_USER_INFO, variables: {username}}],
-  });
+  const [deletePost] = useMutation(DELETE_POST);
 
-  const handleDeletePost = async (id: string) => {
-    try {
-      await deletePost({variables: {id}});
+  const handleDeletePost = async (postId: string) => {
+    try{
+      const {data} = await deletePost({variables: {postId}});
+      if (data.deletePost.success) {
+        // Handle successful deletion
+        console.log('Post deleted successfully');
+      } else {
+        // To handle failure
+        console.error('Failed to delete post:', data.deletePost.message);
+      }
     } catch (error) {
-      console.log('Error deleting post:', error);
+      console.error('Error deleting post:', error);
     }
   };
 
-  interface HandleViewPost {
-    (post: Post): void;
-  }
+  // interface HandleViewPost {
+  //   (post: Post): void;
+  // }
 
-  const handleViewPost: HandleViewPost = (post) => {
+  const handleViewPost = (post: Post) => {
     setSelectedPost(post);
     setShowViewPostModal(true);
   };
@@ -53,13 +58,8 @@ function Profile() {
   });
 
   //more error handling and loading screens
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error loading user data</div>;
-  }
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error loading user data</div>;
 
 
   return (
@@ -99,11 +99,11 @@ function Profile() {
                     <Card.Body>
                       <Card.Title>{data.getUserInfo.user.username}</Card.Title>
                       <Card.Text>{post.postText}</Card.Text>
-                        {state.user?.username === data.getUserInfo.user.username && (
+                      {state.user?.username === data.getUserInfo.user.username && (
                         <Button variant="danger" onClick={() => handleDeletePost(post._id)}>
                           Delete
                         </Button>
-                        )}
+                      )}
                       <Button variant="info" onClick={() => handleViewPost(post)}>
                         View
                       </Button>
