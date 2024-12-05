@@ -1,13 +1,13 @@
 import { Row, Col, Container, Card, Button, Modal, Form } from "react-bootstrap";
 import { useQuery, useMutation } from "@apollo/client";
 import { Link, NavLink, useParams } from "react-router-dom";
+import { useState } from "react";
 
 import { GET_USER_INFO } from "../graphql/queries";
 import { CREATE_COMMENT, DELETE_POST, UPDATE_POST } from "../graphql/mutations";
 import { useStore } from "../store/index";
 import { Post } from "../interfaces";
 import CreatePostModal from "./Profile/components/CreatePostModal";
-import { useState } from "react";
 import ViewPostModal from "./Profile/components/ViewPostModal";
 
 
@@ -82,9 +82,6 @@ function Profile() {
   });
 
 
-  // const [updatePost] = useMutation(UPDATE_POST, {
-  //   refetchQueries: [{ query: GET_USER_INFO, variables: { username } }],
-  // });
 
   const handleDeletePost = async (id: string) => {
     try {
@@ -95,54 +92,11 @@ function Profile() {
     }
   };
 
-  // interface HandleViewPost {
-  //   (post: Post): void;
-  // }
 
   const handleViewPost = (post: Post) => {
     setSelectedPost(post);
     setShowViewPostModal(true);
   };
-
-  // const handleUpdatePost = async (id: string) => {
-  //   try {
-  //     await updatePost ({ variables: { postId: id } });
-  //     console.log('Post updated');
-  //   } catch (error) {
-  //     if (error instanceof ApolloError) {
-  //       console.error('Error updating post:', error.message);
-  //     } else {
-  //       console.error('Unexpected error:', error);
-  //     }
-  //   }
-  // };
-  //get the user from the store
-
-  //error handling and loading screens
-  // if (!data) {
-  //   return <div>Error loading posts</div>;
-  // }
-
-  // if (!username) {
-  //   return <div>Loading...</div>;
-  // }
-  // const [isFollowing, setIsFollowing] = useState(false);
-  // const [followUser] = useMutation(FOLLOW_USER, {
-  //   refetchQueries: [{ query: GET_USER_INFO, variables: { username } }],
-  // });
-
-  // const handleFollow = async (event: React.MouseEvent<HTMLButtonElement>) => {
-  // //   event.preventDefault();
-
-  //   // const followStatus = isFollowing ? 'followUser' : 'unfollowUser';
-
-  //   try {
-  //     await followUser({ variables: { username } });
-  //     setIsFollowing(!isFollowing);
-  //   } catch (error) {
-  //     console.log('Error following user:', error);
-  //   }
-  // };
 
   //more error handling and loading screens
   if (loading) {
@@ -171,9 +125,7 @@ function Profile() {
               <Button variant="primary" className="me-2">Following</Button>
             </Link>
 
-            {/* <Button onClick={(event) => handleFollow(event)}>
-              {isFollowing ? 'Unfollow' : 'Follow'}
-            </Button> */}
+            <Button variant="primary" className="me-2">Follow</Button>
 
           </Card.Body>
         </Col>

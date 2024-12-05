@@ -1,8 +1,7 @@
-import { Container, Nav, Navbar, NavDropdown, Form, FormControl, Button } from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-
-import React, { useState } from "react";
+import React from "react";
 
 import { useStore } from "../store";
 import { LOGOUT_USER } from "../graphql/mutations";
@@ -43,13 +42,6 @@ function Header() {
     navigate('/');
   }
 
-
-  // const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   // Implement search logic here
-  //   console.log('Searching for:', searchQuery);
-  //   // searchUsers({ variables: { query: searchQuery } });
-  // }
 
 
   return (
