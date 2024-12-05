@@ -3,7 +3,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { Link, NavLink, useParams } from "react-router-dom";
 
 import { GET_USER_INFO } from "../graphql/queries";
-import { DELETE_POST, UPDATE_POST } from "../graphql/mutations";
+import { CREATE_COMMENT, DELETE_POST, UPDATE_POST } from "../graphql/mutations";
 import { useStore } from "../store/index";
 import { Post } from "../interfaces";
 import CreatePostModal from "./Profile/components/CreatePostModal";
@@ -20,12 +20,18 @@ function Profile() {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [currentPost, setCurrentPost] = useState<any>(null);
+  const [showCommentModal, setShowCommentModal] = useState(false);
+  const [currentPostForComment, setCurrentPostForComment] = useState<Post | null>(null);
+  const [comment, setComment] = useState("");
 
   const { state } = useStore()!;
   const { data, loading, error } = useQuery(GET_USER_INFO, {
     variables: { username }
   });
   const [updatePost] = useMutation(UPDATE_POST, {
+    refetchQueries: [{ query: GET_USER_INFO, variables: { username } }],
+  });
+  const [createComment] = useMutation(CREATE_COMMENT, {
     refetchQueries: [{ query: GET_USER_INFO, variables: { username } }],
   });
 
@@ -39,15 +45,36 @@ function Profile() {
     setCurrentPost(null);
   };
 
+  const handleCommentClick = (post: Post) => {
+    setCurrentPostForComment(post);
+    setShowCommentModal(true);
+  };
+
+  const handleCloseCommentModal = () => {
+    setShowCommentModal(false);
+    setCurrentPostForComment(null);
+  }
+
   const handleSave = async () => {
     if (currentPost) {
-      try{
-      await updatePost({ variables: { id: currentPost._id, postText: currentPost.postText } });
-      setShowModal(false);
-      setCurrentPost(null);
-    } catch (error) {
-      console.error("Error updating post:", error);
+      try {
+        await updatePost({ variables: { id: currentPost._id, postText: currentPost.postText } });
+        setShowModal(false);
+        setCurrentPost(null);
+      } catch (error) {
+        console.error("Error updating post:", error);
+      }
     }
+  };
+
+  const handleSubmitComment = async () => {
+    if (currentPostForComment) {
+      try {
+        await createComment({ variables: { commentText: comment, post: currentPostForComment._id, user: state.user._id } });
+        handleCloseCommentModal();
+      } catch (error) {
+        console.error("Error creating comment:", error);
+      }
     }
   };
 
@@ -56,24 +83,25 @@ function Profile() {
     refetchQueries: [{ query: GET_USER_INFO, variables: { username } }],
   });
 
+
   // const [updatePost] = useMutation(UPDATE_POST, {
   //   refetchQueries: [{ query: GET_USER_INFO, variables: { username } }],
   // });
 
   const handleDeletePost = async (id: string) => {
     try {
-      console.log("ID",id)
-      await deletePost({ variables: {postId: id } });
+      console.log("ID", id)
+      await deletePost({ variables: { postId: id } });
     } catch (error) {
       console.log('Error deleting post:', error);
     }
   };
 
-  interface HandleViewPost {
-    (post: Post): void;
-  }
+  // interface HandleViewPost {
+  //   (post: Post): void;
+  // }
 
-  const handleViewPost: HandleViewPost = (post) => {
+  const handleViewPost = (post: Post) => {
     setSelectedPost(post);
     setShowViewPostModal(true);
   };
@@ -91,7 +119,7 @@ function Profile() {
   //   }
   // };
   //get the user from the store
- 
+
   //error handling and loading screens
   // if (!data) {
   //   return <div>Error loading posts</div>;
@@ -167,9 +195,9 @@ function Profile() {
                 <Col lg="6" md="12" key={post._id} className="mb-4">
                   <Card className="h-100">
                     <Card.Body>
-                    <NavLink to={`/profile/${data.getUserInfo.user.username}`}>
-                      <Card.Title>{data.getUserInfo.user.username}</Card.Title>
-                    </NavLink>
+                      <NavLink to={`/profile/${data.getUserInfo.user.username}`}>
+                        <Card.Title>{data.getUserInfo.user.username}</Card.Title>
+                      </NavLink>
                       <Card.Text>{post.postText}</Card.Text>
                       {state.user?.username === data.getUserInfo.user.username && (
                         <Button variant="danger" onClick={() => handleDeletePost(post._id)}>
@@ -180,12 +208,41 @@ function Profile() {
                         View
                       </Button>
                       <Button variant="primary" onClick={() => handleUpdateClick(post)}>Update Post</Button>
+                      <Button variant="secondary" onClick={() => handleCommentClick(post)}>
+                        Comment
+                      </Button>
                     </Card.Body>
                   </Card>
                 </Col>
               ))
             )}
           </Row>
+          <Modal show={showCommentModal} onHide={handleCloseCommentModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Add Comment</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form>
+                <Form.Group controlId="comment">
+                  <Form.Label>Comment</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter your comment"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  />
+                </Form.Group>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseCommentModal}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={handleSubmitComment}>
+                Submit
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </Col>
       </Row>
       <Modal show={showModal} onHide={handleClose}>
@@ -225,10 +282,52 @@ function Profile() {
         setShowViewPostModal={setShowViewPostModal}
         post={selectedPost}
       />
-      
+
     </Container>
   );
 }
+
+// function CommentModal({ show, handleClose, post}) {
+//   const [comment, setComment] = useState("");
+//   const [createComment] = useMutation(CREATE_COMMENT, {
+//     refetchQueries: [{ query: GET_USER_INFO, variables: { username: post?.username } }],
+//   });
+
+//   const handleSubmit = async () => {
+//     await createComment({ variables: { commentText: comment, post: post._id, user: post.user._id } });
+//     setComment("");
+//     handleClose();
+//   };
+
+//   return (
+//     <Modal show={show} onHide={handleClose}>
+//       <Modal.Header closeButton>
+//         <Modal.Title>Add Comment</Modal.Title>
+//       </Modal.Header>
+//       <Modal.Body>
+//         <Form>
+//           <Form.Group controlId="comment">
+//             <Form.Label>Comment</Form.Label>
+//             <Form.Control
+//               type="text"
+//               placeholder="Enter your comment"
+//               value={comment}
+//               onChange={(e) => setComment(e.target.value)}
+//             />
+//           </Form.Group>
+//         </Form>
+//       </Modal.Body>
+//       <Modal.Footer>
+//         <Button variant="secondary" onClick={handleClose}>
+//           Close
+//         </Button>
+//         <Button variant="primary" onClick={handleSubmit}>
+//           Submit
+//         </Button>
+//       </Modal.Footer>
+//     </Modal>
+//   )
+// }
 
 export default Profile;
 
