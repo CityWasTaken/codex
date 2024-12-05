@@ -115,7 +115,7 @@ function Profile() {
         {/* display user info */}
         <Col md="4">
           <Card.Body>
-            <Card.Title>{data.getUserInfo.user.username}</Card.Title>
+            <Card.Title className="mb-2">{data.getUserInfo.user.username}</Card.Title>
 
             <Link to="/followers">
               <Button variant="primary" className="me-2">Followers</Button>
@@ -150,14 +150,14 @@ function Profile() {
                       </NavLink>
                       <Card.Text>{post.postText}</Card.Text>
                       {state.user?.username === data.getUserInfo.user.username && (
-                        <Button variant="danger" onClick={() => handleDeletePost(post._id)}>
+                        <Button className="me-2" variant="danger" onClick={() => handleDeletePost(post._id)}>
                           Delete
                         </Button>
                       )}
-                      <Button variant="info" onClick={() => handleViewPost(post)}>
+                      <Button className="me-2" variant="info" onClick={() => handleViewPost(post)}>
                         View
                       </Button>
-                      <Button variant="primary" onClick={() => handleUpdateClick(post)}>Update Post</Button>
+                      <Button className="me-2" variant="primary" onClick={() => handleUpdateClick(post)}>Update Post</Button>
                       <Button variant="secondary" onClick={() => handleCommentClick(post)}>
                         Comment
                       </Button>

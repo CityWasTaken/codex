@@ -23,6 +23,8 @@ function MyFeed() {
     console.error("Error loading posts:", error);
     return <div>Error loading posts</div>;
   }
+
+  console.log(data)
   return (
     <Container>
       <h1 className="my-4">My Feed</h1>
