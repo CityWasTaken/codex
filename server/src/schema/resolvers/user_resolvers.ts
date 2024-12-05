@@ -162,6 +162,7 @@ const user_resolvers = {
 
     // Delete a post
     async deletePost(_: any, args: DeletePostArgs, context: Context) {
+      console.log(args,"Delete");
       if (!context.req.user) {
         return {
           errors: ['You are Not authorized to perform this action']
@@ -179,6 +180,7 @@ const user_resolvers = {
           post: deletePost
         }
       } catch (error) {
+        console.log(error);
         const errorMessage = errorHandler(error);
         throw new GraphQLError(errorMessage);
       }

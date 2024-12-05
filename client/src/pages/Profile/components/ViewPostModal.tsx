@@ -6,6 +6,7 @@ interface ViewPostModalProps {
   showViewPostModal: boolean;
   setShowViewPostModal: React.Dispatch<React.SetStateAction<boolean>>;
   post: { _id: string; title: string; postText: string; user: any; comments: any[]} | null;
+  
 }
 
 function ViewPostModal({
