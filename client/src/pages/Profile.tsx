@@ -1,16 +1,14 @@
 import { Row, Col, Container, Card, Button, Modal, Form } from "react-bootstrap";
 import { useQuery, useMutation } from "@apollo/client";
 import { Link, NavLink, useParams } from "react-router-dom";
+import { useState } from "react";
 
 import { GET_USER_INFO } from "../graphql/queries";
 import { CREATE_COMMENT, DELETE_POST, UPDATE_POST } from "../graphql/mutations";
 import { useStore } from "../store/index";
 import { Post } from "../interfaces";
 import CreatePostModal from "./Profile/components/CreatePostModal";
-import { useState } from "react";
 import ViewPostModal from "./Profile/components/ViewPostModal";
-
-/* making the functionality of the page before pretting it up(writing so i dont confuse myself) */
 
 
 function Profile() {
@@ -58,7 +56,7 @@ function Profile() {
   const handleSave = async () => {
     if (currentPost) {
       try {
-        await updatePost({ variables: { id: currentPost._id, postText: currentPost.postText } });
+        await updatePost({ variables: { postId: currentPost._id, postText: currentPost.postText } });
         setShowModal(false);
         setCurrentPost(null);
       } catch (error) {
@@ -84,9 +82,6 @@ function Profile() {
   });
 
 
-  // const [updatePost] = useMutation(UPDATE_POST, {
-  //   refetchQueries: [{ query: GET_USER_INFO, variables: { username } }],
-  // });
 
   const handleDeletePost = async (id: string) => {
     try {
@@ -97,54 +92,11 @@ function Profile() {
     }
   };
 
-  // interface HandleViewPost {
-  //   (post: Post): void;
-  // }
 
   const handleViewPost = (post: Post) => {
     setSelectedPost(post);
     setShowViewPostModal(true);
   };
-
-  // const handleUpdatePost = async (id: string) => {
-  //   try {
-  //     await updatePost ({ variables: { postId: id } });
-  //     console.log('Post updated');
-  //   } catch (error) {
-  //     if (error instanceof ApolloError) {
-  //       console.error('Error updating post:', error.message);
-  //     } else {
-  //       console.error('Unexpected error:', error);
-  //     }
-  //   }
-  // };
-  //get the user from the store
-
-  //error handling and loading screens
-  // if (!data) {
-  //   return <div>Error loading posts</div>;
-  // }
-
-  // if (!username) {
-  //   return <div>Loading...</div>;
-  // }
-  // const [isFollowing, setIsFollowing] = useState(false);
-  // const [followUser] = useMutation(FOLLOW_USER, {
-  //   refetchQueries: [{ query: GET_USER_INFO, variables: { username } }],
-  // });
-
-  // const handleFollow = async (event: React.MouseEvent<HTMLButtonElement>) => {
-  // //   event.preventDefault();
-
-  //   // const followStatus = isFollowing ? 'followUser' : 'unfollowUser';
-
-  //   try {
-  //     await followUser({ variables: { username } });
-  //     setIsFollowing(!isFollowing);
-  //   } catch (error) {
-  //     console.log('Error following user:', error);
-  //   }
-  // };
 
   //more error handling and loading screens
   if (loading) {
@@ -173,9 +125,7 @@ function Profile() {
               <Button variant="primary" className="me-2">Following</Button>
             </Link>
 
-            {/* <Button onClick={(event) => handleFollow(event)}>
-              {isFollowing ? 'Unfollow' : 'Follow'}
-            </Button> */}
+            <Button variant="primary" className="me-2">Follow</Button>
 
           </Card.Body>
         </Col>
@@ -287,61 +237,5 @@ function Profile() {
   );
 }
 
-// function CommentModal({ show, handleClose, post}) {
-//   const [comment, setComment] = useState("");
-//   const [createComment] = useMutation(CREATE_COMMENT, {
-//     refetchQueries: [{ query: GET_USER_INFO, variables: { username: post?.username } }],
-//   });
-
-//   const handleSubmit = async () => {
-//     await createComment({ variables: { commentText: comment, post: post._id, user: post.user._id } });
-//     setComment("");
-//     handleClose();
-//   };
-
-//   return (
-//     <Modal show={show} onHide={handleClose}>
-//       <Modal.Header closeButton>
-//         <Modal.Title>Add Comment</Modal.Title>
-//       </Modal.Header>
-//       <Modal.Body>
-//         <Form>
-//           <Form.Group controlId="comment">
-//             <Form.Label>Comment</Form.Label>
-//             <Form.Control
-//               type="text"
-//               placeholder="Enter your comment"
-//               value={comment}
-//               onChange={(e) => setComment(e.target.value)}
-//             />
-//           </Form.Group>
-//         </Form>
-//       </Modal.Body>
-//       <Modal.Footer>
-//         <Button variant="secondary" onClick={handleClose}>
-//           Close
-//         </Button>
-//         <Button variant="primary" onClick={handleSubmit}>
-//           Submit
-//         </Button>
-//       </Modal.Footer>
-//     </Modal>
-//   )
-// }
-
 export default Profile;
 
-/*
-    <div>
-        <h1>{data.getUserInfo.user.username}'s Profile</h1>
-        <p>Followers: {data.getUserInfo.user.followers.map((user: any) => user.username).join(', ')}</p>
-        <p>Post count: {data.getUserInfo.user.posts.length}</p>
-    </div>
-*/
-
-// <h1>Followers</h1>
-/*
-  <Card.Body>
-    <Card.Title>{data.getUserInfo.user.followers.username}</Card.Title>
-  </Card.Body>
-*/

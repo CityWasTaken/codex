@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 
 
 import { useStore } from "../store";
-
 import { REGISTER_USER, LOGIN_USER } from "../graphql/mutations";
 
 const initialFormData = {

@@ -42,32 +42,6 @@ nav a:hover:not(.navbar-brand) {
   align-items: center;
 }
 
-/* .landing-post:nth-child(even) {
-  background: #E78D50;
-  color: #eeee;
-}
-
-.landing-post:nth-child(odd) {
-  background: #eeee;
-  color: #E78D50;
-} */
-
-/* .landing-post {
-    position: relative;
-}
-
-.landing-post:before {
-    content: '';
-    position: absolute;
-    left: -10px;
-    top: 0;
-    background: #e8be87;
-    width: 7px;
-    height: 100%;
-} */
-
-
-
 /* Media Queries */
 
 @media (max-width: 768px) {
@@ -88,14 +62,7 @@ nav a:hover:not(.navbar-brand) {
   main form {
     width: 450px !important;
   }
-
-  /* .pet-output {
-    grid-template-columns: 1fr;
-  } */
 }
-
-
-
 
 /* RECEIVED FROM WEB3 FORMS */
 .contact-section {
