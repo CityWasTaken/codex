@@ -1,8 +1,7 @@
-import { Container, Nav, Navbar, NavDropdown, Form, FormControl, Button } from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-
-import React, { useState } from "react";
+import React from "react";
 
 import { useStore } from "../store";
 import { LOGOUT_USER } from "../graphql/mutations";
@@ -12,7 +11,7 @@ import { client } from "../main";
 
 function Header() {
   const { state, setState } = useStore()!;
-  const [searchQuery, setSearchQuery] = useState('');
+  // const [searchQuery, setSearchQuery] = useState('');
   // const [searchResults, setSearchResults] = useState([]); // State to store search results
 
   const [logoutUser] = useMutation(LOGOUT_USER, {
@@ -44,13 +43,6 @@ function Header() {
   }
 
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Implement search logic here
-    console.log('Searching for:', searchQuery);
-    // searchUsers({ variables: { query: searchQuery } });
-  }
-
 
   return (
     <Navbar bg="light" data-bs-theme="light">
@@ -73,9 +65,10 @@ function Header() {
 
                   <Nav.Link as={NavLink} to={`/profile/${state.user.username}`}>My Profile</Nav.Link>
                   <Nav.Link as={NavLink} to="/myfeed">My Feed</Nav.Link>
+                  <Nav.Link as={NavLink} to="/contact">Contact Us</Nav.Link>
 
                   <NavDropdown title="Profile Menu">
-                    <NavDropdown.ItemText className="border-bottom mb-2">Welcome Coder {state.user.username},</NavDropdown.ItemText>
+                    <NavDropdown.ItemText className="border-bottom mb-2">Welcome, {state.user.username}</NavDropdown.ItemText>
                     <NavDropdown.Item onClick={handleLogout} href="/logout">Logout</NavDropdown.Item>
                   </NavDropdown>
                 </>

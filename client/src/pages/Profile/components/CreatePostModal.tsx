@@ -59,6 +59,7 @@ function CreatePostModal({
       setFormData({ ...initialFormData });
 
       handleModalClose();
+      location.reload();
     } catch (error: any) {
       setFormData({
         ...formData,
@@ -78,6 +79,9 @@ function CreatePostModal({
         {formData.errorMessage && <Alert variant="danger">{formData.errorMessage}</Alert>}
 
         <Form>
+          <Form.Group className="mb-3">
+
+          </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Enter the post details</Form.Label>
             <Form.Control
