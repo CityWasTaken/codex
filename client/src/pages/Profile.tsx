@@ -1,9 +1,9 @@
-import { Row, Col, Container, Card, Button } from "react-bootstrap";
-import { useQuery, useMutation, gql } from "@apollo/client";
+import { Row, Col, Container, Card, Button, Modal, Form } from "react-bootstrap";
+import { useQuery, useMutation } from "@apollo/client";
 import { Link, NavLink, useParams } from "react-router-dom";
 
-import { GET_ALL_USER_POSTS, GET_USER_INFO } from "../graphql/queries";
-import { DELETE_POST, FOLLOW_USER } from "../graphql/mutations";
+import { GET_USER_INFO } from "../graphql/queries";
+import { DELETE_POST, UPDATE_POST } from "../graphql/mutations";
 import { useStore } from "../store/index";
 import { Post } from "../interfaces";
 import CreatePostModal from "./Profile/components/CreatePostModal";
@@ -18,27 +18,54 @@ function Profile() {
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
   const [showViewPostModal, setShowViewPostModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
-  // const [commentText, setCommentText] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [currentPost, setCurrentPost] = useState<any>(null);
 
-  const { data, loading, error } = useQuery(GET_ALL_USER_POSTS, {
+  const { state } = useStore()!;
+  const { data, loading, error } = useQuery(GET_USER_INFO, {
     variables: { username }
   });
+  const [updatePost] = useMutation(UPDATE_POST, {
+    refetchQueries: [{ query: GET_USER_INFO, variables: { username } }],
+  });
+
+  const handleUpdateClick = (post: any) => {
+    setCurrentPost(post);
+    setShowModal(true);
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
+    setCurrentPost(null);
+  };
+
+  const handleSave = async () => {
+    if (currentPost) {
+      try{
+      await updatePost({ variables: { id: currentPost._id, postText: currentPost.postText } });
+      setShowModal(false);
+      setCurrentPost(null);
+    } catch (error) {
+      console.error("Error updating post:", error);
+    }
+    }
+  };
 
   const handleShowCreatePostModal = () => setShowCreatePostModal(true);
   const [deletePost] = useMutation(DELETE_POST, {
     refetchQueries: [{ query: GET_USER_INFO, variables: { username } }],
   });
 
+  // const [updatePost] = useMutation(UPDATE_POST, {
+  //   refetchQueries: [{ query: GET_USER_INFO, variables: { username } }],
+  // });
+
   const handleDeletePost = async (id: string) => {
     try {
-      const { data } = await deletePost({ variables: { id } });
-      if (data.deletePost.success) {
-        console.log('Post deleted successfully');
-      } else {
-        console.error('Failed to delete post:', data.deletePost.message);
-      }
+      console.log("ID",id)
+      await deletePost({ variables: {postId: id } });
     } catch (error) {
-      console.error('Error deleting post:', error);
+      console.log('Error deleting post:', error);
     }
   };
 
@@ -50,34 +77,56 @@ function Profile() {
     setSelectedPost(post);
     setShowViewPostModal(true);
   };
+
+  // const handleUpdatePost = async (id: string) => {
+  //   try {
+  //     await updatePost ({ variables: { postId: id } });
+  //     console.log('Post updated');
+  //   } catch (error) {
+  //     if (error instanceof ApolloError) {
+  //       console.error('Error updating post:', error.message);
+  //     } else {
+  //       console.error('Unexpected error:', error);
+  //     }
+  //   }
+  // };
+  //get the user from the store
+ 
   //error handling and loading screens
+  // if (!data) {
+  //   return <div>Error loading posts</div>;
+  // }
+
   // if (!username) {
   //   return <div>Loading...</div>;
   // }
-
-  // get the user from the store
-  const { state } = useStore()!;
-  // const { data, loading, error } = useQuery(GET_USER_INFO, {
-  //   variables: { username }
+  // const [isFollowing, setIsFollowing] = useState(false);
+  // const [followUser] = useMutation(FOLLOW_USER, {
+  //   refetchQueries: [{ query: GET_USER_INFO, variables: { username } }],
   // });
-  const [isFollowing, setIsFollowing] = useState(false);
-  const [followUser] = useMutation(FOLLOW_USER, {
-    refetchQueries: [{ query: GET_USER_INFO, variables: { username } }],
-  });
 
-  const handleFollow = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    try {
-      await followUser({ variables: { username } });
-      setIsFollowing(!isFollowing);
-    } catch (error) {
-      console.log('Error following user:', error);
-    }
-  };
+  // const handleFollow = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  // //   event.preventDefault();
+
+  //   // const followStatus = isFollowing ? 'followUser' : 'unfollowUser';
+
+  //   try {
+  //     await followUser({ variables: { username } });
+  //     setIsFollowing(!isFollowing);
+  //   } catch (error) {
+  //     console.log('Error following user:', error);
+  //   }
+  // };
 
   //more error handling and loading screens
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error loading user data</div>;
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading user data</div>;
+  }
+
 
   return (
 
@@ -96,9 +145,9 @@ function Profile() {
               <Button variant="primary" className="me-2">Following</Button>
             </Link>
 
-            <Button onClick={(event) => handleFollow(event)}>
+            {/* <Button onClick={(event) => handleFollow(event)}>
               {isFollowing ? 'Unfollow' : 'Follow'}
-            </Button>
+            </Button> */}
 
           </Card.Body>
         </Col>
@@ -118,9 +167,9 @@ function Profile() {
                 <Col lg="6" md="12" key={post._id} className="mb-4">
                   <Card className="h-100">
                     <Card.Body>
-                      <NavLink to={`/profile/${data.getUserInfo.user.username}`}>
-                        <Card.Title>{data.getUserInfo.user.username}</Card.Title>
-                      </NavLink>
+                    <NavLink to={`/profile/${data.getUserInfo.user.username}`}>
+                      <Card.Title>{data.getUserInfo.user.username}</Card.Title>
+                    </NavLink>
                       <Card.Text>{post.postText}</Card.Text>
                       {state.user?.username === data.getUserInfo.user.username && (
                         <Button variant="danger" onClick={() => handleDeletePost(post._id)}>
@@ -130,6 +179,7 @@ function Profile() {
                       <Button variant="info" onClick={() => handleViewPost(post)}>
                         View
                       </Button>
+                      <Button variant="primary" onClick={() => handleUpdateClick(post)}>Update Post</Button>
                     </Card.Body>
                   </Card>
                 </Col>
@@ -138,6 +188,32 @@ function Profile() {
           </Row>
         </Col>
       </Row>
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Update Post</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formPostText">
+              <Form.Label>Post Text</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                value={currentPost?.postText || ''}
+                onChange={(e) => setCurrentPost({ ...currentPost, postText: e.target.value })}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSave}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <CreatePostModal
         showCreatePostModal={showCreatePostModal}
         setShowCreatePostModal={setShowCreatePostModal}
@@ -149,6 +225,7 @@ function Profile() {
         setShowViewPostModal={setShowViewPostModal}
         post={selectedPost}
       />
+      
     </Container>
   );
 }
@@ -169,14 +246,3 @@ export default Profile;
     <Card.Title>{data.getUserInfo.user.followers.username}</Card.Title>
   </Card.Body>
 */
-
-/* <div className='likes'>
-                        <h4>Liked By:</h4>
-                        <ul>
-                          {post.likes.map((user: User) => (
-                          <li key={user._id}>
-                            <NavLink to={`/profile/${user.username}`}>{user.username}</NavLink>
-                          </li>
-                          ))}
-                        </ul>
-                      </div> */

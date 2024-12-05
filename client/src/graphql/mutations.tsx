@@ -44,12 +44,13 @@ mutation CreatePost($postText: String, $user: ID) {
 `;
 
 export const UPDATE_POST = gql`
-mutation UpdatePost($postId: ID, $postText: String) {
-  updatePost(postId: $postId, postText: $postText) {
-    errors
-    message
+  mutation UpdatePost($id: ID!, $postText: String!) {
+    updatePost(id: $id, postText: $postText) {
+      _id
+      postText
+      updatedAt
+    }
   }
-}
 `;
 
 export const DELETE_POST = gql`
