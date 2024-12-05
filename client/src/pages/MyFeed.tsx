@@ -1,4 +1,5 @@
 import { useQuery } from "@apollo/client";
+
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { GET_ALL_USER_POSTS } from "../graphql/queries";
 import { useStore } from "../store";
@@ -41,6 +42,47 @@ function MyFeed() {
           </Col>
         ))}
       </Row>
+
+import { Row, Col, Container, Card} from "react-bootstrap";
+import {GET_ALL_USER_POSTS} from '../graphql/queries';
+
+
+function MyFeed() {
+
+    const { loading, error, data } = useQuery(GET_ALL_USER_POSTS);
+
+    let content;
+
+    if (loading) {
+        content = <p>Loading...</p>;
+
+    }
+    
+    if (error) {
+        content = <p>Error loading posts :/ {error.message}</p>;
+    }
+
+    const posts = data.getAllUserPosts
+
+
+  //i keep getting he load screen, not sure what that is about
+
+  return (
+    <Container>
+      <h1 className= 'my-4'>My Feed</h1>
+
+        <Row>
+            {posts.map((post: any) => (
+                <Col md={4} key={post._id} className="mb-4">
+                    <Card className="h-100">
+                        <Card.Body>
+                            <Card.Title>{post.title}</Card.Title>
+                            <Card.Text>{post.content}</Card.Text>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            ))}
+        </Row>
     </Container>
   );
 }

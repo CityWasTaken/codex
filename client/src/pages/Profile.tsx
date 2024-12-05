@@ -91,6 +91,7 @@ function Profile() {
   //   }
   // };
   //get the user from the store
+
  
   //error handling and loading screens
   // if (!data) {
@@ -118,6 +119,28 @@ function Profile() {
   //   }
   // };
 
+  const { state } = useStore()!;
+  const { data, loading, error } = useQuery(GET_USER_INFO, {
+    variables: { username }
+  });
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [followUser] = useMutation(FOLLOW_USER, {
+    refetchQueries: [{ query: GET_USER_INFO, variables: { username } }],
+  });
+
+  const handleFollow = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+
+    try {
+      await followUser({ variables: { username } });
+      setIsFollowing(!isFollowing);
+    } catch (error) {
+      console.log('Error following user:', error);
+    }
+  };
+
+
   //more error handling and loading screens
   if (loading) {
     return <div>Loading...</div>;
@@ -126,6 +149,8 @@ function Profile() {
   if (error) {
     return <div>Error loading user data</div>;
   }
+
+
 
 
   return (
