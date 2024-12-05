@@ -12,7 +12,7 @@ import { client } from "../main";
 
 function Header() {
   const { state, setState } = useStore()!;
-  const [searchQuery, setSearchQuery] = useState('');
+  // const [searchQuery, setSearchQuery] = useState('');
   // const [searchResults, setSearchResults] = useState([]); // State to store search results
 
   const [logoutUser] = useMutation(LOGOUT_USER, {
@@ -44,12 +44,12 @@ function Header() {
   }
 
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Implement search logic here
-    console.log('Searching for:', searchQuery);
-    // searchUsers({ variables: { query: searchQuery } });
-  }
+  // const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   // Implement search logic here
+  //   console.log('Searching for:', searchQuery);
+  //   // searchUsers({ variables: { query: searchQuery } });
+  // }
 
 
   return (
@@ -73,6 +73,7 @@ function Header() {
 
                   <Nav.Link as={NavLink} to={`/profile/${state.user.username}`}>My Profile</Nav.Link>
                   <Nav.Link as={NavLink} to="/myfeed">My Feed</Nav.Link>
+                  <Nav.Link as={NavLink} to="/contact">Contact Us</Nav.Link>
 
                   <NavDropdown title="Profile Menu">
                     <NavDropdown.ItemText className="border-bottom mb-2">Welcome, {state.user.username}</NavDropdown.ItemText>

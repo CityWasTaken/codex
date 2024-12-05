@@ -14,27 +14,11 @@ const initialState = {
 function ContactForm() {
 
 	const [formData, setFormData] = useState(initialState);
-	// const [alertMessage, setAlertMessage] = useState('');
-	// const [errorMessage, setErrorMessage] = useState('');
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		// const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-		// if (!emailRegex.test(formData.email)) {
-		// 	setErrorMessage('Please enter a valid email address!');
-		// 	return;
-		// }
-
 		await axios.post(url, formData);
-
-		// setAlertMessage('Your message has been received!');
-		// setErrorMessage('');
-
-		// setTimeout(() => {
-		// 	setAlertMessage('');
-		// }, 4500);
 
 		setFormData({ ...initialState });
 	}
@@ -58,8 +42,6 @@ function ContactForm() {
 
   <form className="contact-form" action="https://api.web3forms.com/submit" method="POST">
 
-  {/* {alertMessage && <p className="success text-center">{alertMessage}</p>}
-				{errorMessage && <p className="error text-center">{errorMessage}</p>} */}
 
 	<input type="hidden" name="access_key" value="0fb7743e-3ac6-49a2-b9fa-5e38787c34e7" />
 	<input type="hidden" name="subject" value="New Contact Form Submission from CodeX User" />

@@ -10,8 +10,6 @@ import CreatePostModal from "./Profile/components/CreatePostModal";
 import { useState } from "react";
 import ViewPostModal from "./Profile/components/ViewPostModal";
 
-/* making the functionality of the page before pretting it up(writing so i dont confuse myself) */
-
 
 function Profile() {
   const { username } = useParams<{ username: string }>();
@@ -58,7 +56,7 @@ function Profile() {
   const handleSave = async () => {
     if (currentPost) {
       try {
-        await updatePost({ variables: { id: currentPost._id, postText: currentPost.postText } });
+        await updatePost({ variables: { postId: currentPost._id, postText: currentPost.postText } });
         setShowModal(false);
         setCurrentPost(null);
       } catch (error) {
@@ -287,61 +285,5 @@ function Profile() {
   );
 }
 
-// function CommentModal({ show, handleClose, post}) {
-//   const [comment, setComment] = useState("");
-//   const [createComment] = useMutation(CREATE_COMMENT, {
-//     refetchQueries: [{ query: GET_USER_INFO, variables: { username: post?.username } }],
-//   });
-
-//   const handleSubmit = async () => {
-//     await createComment({ variables: { commentText: comment, post: post._id, user: post.user._id } });
-//     setComment("");
-//     handleClose();
-//   };
-
-//   return (
-//     <Modal show={show} onHide={handleClose}>
-//       <Modal.Header closeButton>
-//         <Modal.Title>Add Comment</Modal.Title>
-//       </Modal.Header>
-//       <Modal.Body>
-//         <Form>
-//           <Form.Group controlId="comment">
-//             <Form.Label>Comment</Form.Label>
-//             <Form.Control
-//               type="text"
-//               placeholder="Enter your comment"
-//               value={comment}
-//               onChange={(e) => setComment(e.target.value)}
-//             />
-//           </Form.Group>
-//         </Form>
-//       </Modal.Body>
-//       <Modal.Footer>
-//         <Button variant="secondary" onClick={handleClose}>
-//           Close
-//         </Button>
-//         <Button variant="primary" onClick={handleSubmit}>
-//           Submit
-//         </Button>
-//       </Modal.Footer>
-//     </Modal>
-//   )
-// }
-
 export default Profile;
 
-/*
-    <div>
-        <h1>{data.getUserInfo.user.username}'s Profile</h1>
-        <p>Followers: {data.getUserInfo.user.followers.map((user: any) => user.username).join(', ')}</p>
-        <p>Post count: {data.getUserInfo.user.posts.length}</p>
-    </div>
-*/
-
-// <h1>Followers</h1>
-/*
-  <Card.Body>
-    <Card.Title>{data.getUserInfo.user.followers.username}</Card.Title>
-  </Card.Body>
-*/
