@@ -22,8 +22,8 @@ export const GET_USER = gql`
 
 
 export const GET_ALL_USER_POSTS = gql`
-  query GetAllUserPosts {
-    getAllUserPosts {
+  query GetAllUserPosts($user_id: ID!) {
+    getAllUserPosts(user_id: $user_id) {
       _id
       title
       postText
@@ -34,7 +34,7 @@ export const GET_ALL_USER_POSTS = gql`
         }
       }
       user {
-        name
+        _id
       }
     }
   }

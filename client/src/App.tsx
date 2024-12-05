@@ -3,6 +3,8 @@ import { useStore } from "./store";
 
 // import { useState } from 'react'
 
+// import UserProfile from "./UserProfile";
+import MyFeed from "./pages/MyFeed";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ProtectRoute from "./components/ProtectRoute";
@@ -63,7 +65,7 @@ function App() {
 
           <Route path="/myfeed" element={(
             <ProtectRoute>
-              <Profile />
+              <MyFeed />
             </ProtectRoute>
           )} />
 

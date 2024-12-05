@@ -15,3 +15,19 @@ export interface Post {
   likes: User[]; // Array of users who liked the post
 }
 
+
+interface ViewPostModalProps {
+
+  showViewPostModal: boolean;
+
+  setShowViewPostModal: React.Dispatch<React.SetStateAction<boolean>>;
+
+  post: Post | null;
+
+  show: boolean;
+
+
+
+  onHide: () => void;
+
+}

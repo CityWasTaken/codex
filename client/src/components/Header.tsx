@@ -1,13 +1,13 @@
 import { Container, Nav, Navbar, NavDropdown, Form, FormControl, Button } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
 import React, { useState } from "react";
 
 import { useStore } from "../store";
 import { LOGOUT_USER } from "../graphql/mutations";
 import { client } from "../main";
-import { SEARCH_USER } from "../graphql/queries";
+
 
 
 function Header() {
@@ -63,19 +63,6 @@ function Header() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            {state.user && (
-              <Form className="d-flex" onSubmit={handleSearch}>
-                <FormControl
-                  type="search"
-                  placeholder="Search"
-                  className="me-2"
-                  aria-label="Search"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <Button variant="outline-success" type="submit">Search</Button>
-              </Form>
-            )}
 
             <Nav className="ms-auto">
               <Nav.Link as={NavLink} to="/">Home</Nav.Link>

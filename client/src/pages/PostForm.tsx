@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import { Button, Container, Form } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { CREATE_POST } from '../graphql/mutations';
@@ -42,11 +42,11 @@ function PostForm() {
     }
   };
 
-  // Example list of users who liked the post
-  const likedUsers = [
-    { _id: '1', username: 'user1' },
-    { _id: '2', username: 'user2' }
-  ];
+  // // Example list of users who liked the post
+  // const likedUsers = [
+  //   { _id: '1', username: 'user1' },
+  //   { _id: '2', username: 'user2' }
+  // ];
 
   return (
     <Container>
