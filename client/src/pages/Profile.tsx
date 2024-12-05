@@ -1,5 +1,5 @@
 import { Row, Col, Container, Card, Button } from "react-bootstrap";
-import { gql, useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation, gql } from "@apollo/client";
 import { Link, NavLink, useParams } from "react-router-dom";
 
 import { GET_ALL_USER_POSTS, GET_USER_INFO } from "../graphql/queries";
@@ -18,24 +18,23 @@ function Profile() {
   const [showCreatePostModal, setShowCreatePostModal] = useState(false);
   const [showViewPostModal, setShowViewPostModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  // const [commentText, setCommentText] = useState('');
 
-  const {data} = useQuery(GET_ALL_USER_POSTS, {
-    variables: {username}
+  const { data, loading, error } = useQuery(GET_ALL_USER_POSTS, {
+    variables: { username }
   });
 
   const handleShowCreatePostModal = () => setShowCreatePostModal(true);
   const [deletePost] = useMutation(DELETE_POST, {
-    refetchQueries: [{query: GET_ALL_USER_POSTS, variables: {username}}],
+    refetchQueries: [{ query: GET_USER_INFO, variables: { username } }],
   });
 
-  const handleDeletePost = async (postId: string) => {
-    try{
-      const {data} = await deletePost({variables: {postId}});
+  const handleDeletePost = async (id: string) => {
+    try {
+      const { data } = await deletePost({ variables: { id } });
       if (data.deletePost.success) {
-        // Handle successful deletion
         console.log('Post deleted successfully');
       } else {
-        // To handle failure
         console.error('Failed to delete post:', data.deletePost.message);
       }
     } catch (error) {
@@ -43,24 +42,24 @@ function Profile() {
     }
   };
 
-  // interface HandleViewPost {
-  //   (post: Post): void;
-  // }
+  interface HandleViewPost {
+    (post: Post): void;
+  }
 
-  const handleViewPost = (post: Post) => {
+  const handleViewPost: HandleViewPost = (post) => {
     setSelectedPost(post);
     setShowViewPostModal(true);
   };
   //error handling and loading screens
-  if (!username) {
-    return <div>Loading...</div>;
-  }
+  // if (!username) {
+  //   return <div>Loading...</div>;
+  // }
 
-  //get the user from the store
+  // get the user from the store
   const { state } = useStore()!;
-  const { data} = useQuery(GET_USER_INFO, {
-    variables: { username }
-  });
+  // const { data, loading, error } = useQuery(GET_USER_INFO, {
+  //   variables: { username }
+  // });
   const [isFollowing, setIsFollowing] = useState(false);
   const [followUser] = useMutation(FOLLOW_USER, {
     refetchQueries: [{ query: GET_USER_INFO, variables: { username } }],
@@ -68,8 +67,6 @@ function Profile() {
 
   const handleFollow = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-
-
     try {
       await followUser({ variables: { username } });
       setIsFollowing(!isFollowing);
@@ -81,9 +78,6 @@ function Profile() {
   //more error handling and loading screens
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error loading user data</div>;
-
-
-
 
   return (
 
@@ -124,9 +118,9 @@ function Profile() {
                 <Col lg="6" md="12" key={post._id} className="mb-4">
                   <Card className="h-100">
                     <Card.Body>
-                    <NavLink to={`/profile/${data.getUserInfo.user.username}`}>
-                      <Card.Title>{data.getUserInfo.user.username}</Card.Title>
-                    </NavLink>
+                      <NavLink to={`/profile/${data.getUserInfo.user.username}`}>
+                        <Card.Title>{data.getUserInfo.user.username}</Card.Title>
+                      </NavLink>
                       <Card.Text>{post.postText}</Card.Text>
                       {state.user?.username === data.getUserInfo.user.username && (
                         <Button variant="danger" onClick={() => handleDeletePost(post._id)}>
@@ -135,7 +129,7 @@ function Profile() {
                       )}
                       <Button variant="info" onClick={() => handleViewPost(post)}>
                         View
-                      </Button>                     
+                      </Button>
                     </Card.Body>
                   </Card>
                 </Col>
