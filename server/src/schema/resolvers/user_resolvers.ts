@@ -63,6 +63,7 @@ const user_resolvers = {
     async getAllUserPosts(_: any, args: { user_id: Types.ObjectId }) {
       try {
         const posts = await Post.find({ user: args.user_id })
+          .populate('user')
           .populate({
             path: 'comments',
             select: 'commentText user',

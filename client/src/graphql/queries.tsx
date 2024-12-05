@@ -35,6 +35,7 @@ export const GET_ALL_USER_POSTS = gql`
       }
       user {
         _id
+        username
       }
     }
   }

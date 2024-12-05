@@ -1,10 +1,11 @@
 import { useState } from 'react';
 // import { NavLink } from 'react-router-dom';
 
-import { Container } from 'react-bootstrap';
+import { Button, Container, Form } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { CREATE_POST } from '../graphql/mutations';
 import { useNavigate } from 'react-router-dom';
+
 
 const initialFormData = {
   postText: '',
@@ -53,8 +54,8 @@ function PostForm() {
 
   return (
     <Container>
-      <h1> Coming Soon! </h1>
-      {/* <Form onSubmit={handleSubmit} style={{ width: '500px' }} className="mx-auto mt-5">
+      {/* <h1> Coming Soon! </h1> */}
+      <Form onSubmit={handleSubmit} style={{ width: '500px' }} className="mx-auto mt-5">
         <Form.Group className="mb-3">
           <Form.Label>Text</Form.Label>
           <Form.Control
@@ -71,7 +72,7 @@ function PostForm() {
             Submit
           </Button>
         </div>
-      </Form> */}
+      </Form>
 
       {formData.errorMessage && <p className="text-center text-danger">{formData.errorMessage}</p>}
 
